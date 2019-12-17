@@ -11,7 +11,10 @@ using namespace std;
 
 class Command {
 public:
+    int parmeterNum;
+
     virtual int execute(string s) = 0;
+
     virtual ~Command() {}
 };
 
