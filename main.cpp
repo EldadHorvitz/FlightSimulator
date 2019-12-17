@@ -4,7 +4,6 @@
 #include "Command.h"
 #include "OpenServerCommand.h"
 #include <map>
-
 using namespace std;
 
 vector<string> lexer(char *string);
@@ -35,12 +34,13 @@ vector<string> lexer(char *filename) {
 }
 
 
-void parser(vector<string> lexered, map<string, Command> hashMap) {
-    int index = 0;
-    while (index < lexered.size()) {
-        Command c = hashMap[lexered[index]];
-        if (c != NULL) {
+void parser(vector<string> lexered,map<string,Command> hashMap) {
+    int index=0;
+    while (index < lexered.size()){
+        Command c =  hashMap[lexered[index]];
+        if(c!=NULL) {
             index += c.execute();
         }
     }
 }
+
