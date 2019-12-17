@@ -19,7 +19,7 @@ map<string, Command *> initilize();
 int main(int argc, char *argv[]) {
     vector<string> v = lexer(argv[1]);
     map<string, Command *> hashMap = initilize();
-    parser(v, hashMap);
+    //parser(v, hashMap);
     return 0;
 }
 
