@@ -2,8 +2,8 @@
 #include <vector>
 #include<fstream>
 #include "Command.h"
-#include "OpenServerCommand.h"
 #include "DefineVarCommand.h"
+#include "OpenServerCommand.h"
 #include "ConnectCommand.h"
 #include <map>
 
@@ -40,7 +40,7 @@ vector<string> lexer(char *filename) {
         }
         c = file.get();
     }
-
+    return vector;
 }
 
 
@@ -54,13 +54,15 @@ void parser(vector<string> lexered, map<string, Command *> hashMap) {
     }
 }
 
+
 map<string, Command *> initilize() {
+
     map<string, Command *> hash;
     Command *c = new DefineVarCommand();
     hash.insert({"var", c});
-    c = new OpenServerCommand();
-    hash.insert({"openDataServer", c});
-    c = new ConnectCommand();
-    hash.insert({"connectControlClient", c});
+    Command *d = new OpenServerCommand();
+    hash.insert({"openDataServer", d});
+    Command *e = new ConnectCommand();
+    hash.insert({"connectControlClient", e});
     return hash;
 }
