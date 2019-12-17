@@ -6,12 +6,13 @@
 #define EX3_COMMAND_H
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
 class Command {
 public:
-    virtual int execute(string s) = 0;
+    virtual int execute(vector<string> v,int index) = 0;
     virtual ~Command() {}
 };
 
