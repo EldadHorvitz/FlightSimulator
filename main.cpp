@@ -19,12 +19,12 @@ map<string, Command *> initilize();
 int main(int argc, char *argv[]) {
     vector<string> v = lexer(argv[1]);
     map<string, Command *> hashMap = initilize();
-    parser(v, hashMap);
+  //  parser(v, hashMap);
     return 0;
 }
 
 vector<string> lexer(char *filename) {
-    vector<string> vector;
+    vector<string> vector1;
     ifstream file;
     file.open(filename);
     int indexVector = 0;
@@ -32,7 +32,7 @@ vector<string> lexer(char *filename) {
     string temp = "";
     while (c != EOF) {
         if (c == ' ' || c == '(' || c == ')' || c == ',') {
-            vector.insert(vector.begin() + indexVector, temp);
+            vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
         } else if (c != '\n') {
@@ -40,7 +40,7 @@ vector<string> lexer(char *filename) {
         }
         c = file.get();
     }
-
+    return vector1;
 }
 
 
