@@ -16,18 +16,18 @@ vector<string> lexer(char *filename) {
     ifstream file;
     file.open(filename);
     int indexVector = 0;
-    for (string line; getline(file, line);) {
-        int startString = 0;
-        int endString = 0;
-        for (char &c: line) {
-            if (c == ' ' || c == '(') {
-                break;
-            }
-            endString++;
+    char c = file.get();
+    string temp = "";
+    while (c != EOF) {
+        if (c == ' ' || c == '(' || c == ')' || c == ',') {
+            vector.insert(vector.begin() + indexVector, temp);
+            temp = "";
+            indexVector++;
+        } else if (c != '\n') {
+            temp += c;
         }
-        vector.insert(vector.begin() + indexVector, line.substr(startString, endString));
-        startString = endString;
-        indexVector++;
+        c = file.get();
     }
+
 }
 
