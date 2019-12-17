@@ -6,9 +6,14 @@
 using namespace std;
 
 vector<string> lexer(char *string);
+void parser(vector<string> lexered,map<string,Command> hashMap);
+map<string,Command> initilize ();
+
 
 int main(int argc, char *argv[]) {
     vector<string> v=lexer(argv[1]);
+    map<string,Command> hashMap= initilize();
+    parser(v,hashMap);
     return 0;
 }
 
@@ -43,3 +48,9 @@ void parser(vector<string> lexered,map<string,Command> hashMap) {
     }
 }
 
+map<string,Command> initilize (){
+    map<string,Command> hash;
+    Command c=...;
+    hash.insert("ju",c);
+    return hash;
+}
