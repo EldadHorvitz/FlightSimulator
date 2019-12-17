@@ -11,4 +11,3 @@ OpenServerCommand::OpenServerCommand() {
 int OpenServerCommand::execute(vector<string> v, int index) {
     return this->parmeterNum + 1;
 }
-

@@ -2,8 +2,8 @@
 #include <vector>
 #include<fstream>
 #include "Command.h"
-#include "DefineVarCommand.h"
 #include "OpenServerCommand.h"
+#include "DefineVarCommand.h"
 #include "ConnectCommand.h"
 #include <map>
 
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 }
 
 vector<string> lexer(char *filename) {
-    vector<string> vector;
+    vector<string> vector1;
     ifstream file;
     file.open(filename);
     int indexVector = 0;
@@ -32,7 +32,7 @@ vector<string> lexer(char *filename) {
     string temp = "";
     while (c != EOF) {
         if (c == ' ' || c == '(' || c == ')' || c == ',') {
-            vector.insert(vector.begin() + indexVector, temp);
+            vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
         } else if (c != '\n') {
@@ -40,7 +40,7 @@ vector<string> lexer(char *filename) {
         }
         c = file.get();
     }
-    return vector;
+    return vector1;
 }
 
 
@@ -54,15 +54,13 @@ void parser(vector<string> lexered, map<string, Command *> hashMap) {
     }
 }
 
-
 map<string, Command *> initilize() {
-
     map<string, Command *> hash;
     Command *c = new DefineVarCommand();
     hash.insert({"var", c});
-    Command *d = new OpenServerCommand();
-    hash.insert({"openDataServer", d});
-    Command *e = new ConnectCommand();
-    hash.insert({"connectControlClient", e});
+    c = new OpenServerCommand();
+    hash.insert({"openDataServer", c});
+    c = new ConnectCommand();
+    hash.insert({"connectControlClient", c});
     return hash;
 }
