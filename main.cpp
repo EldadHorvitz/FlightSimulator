@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+<<<<<<< Updated upstream
 #include<fstream>
 
 using namespace std;
@@ -31,3 +32,22 @@ vector<string> lexer(char *filename) {
 
 }
 
+=======
+#include "Command.h"
+#include <map>
+using namespace std;
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    map<string,Command> hashMap;
+    return 0;
+}
+void parser(vector<string> lexered,map<string,Command> hashMap) {
+    int index=0;
+    while (index < lexered.size()){
+        Command c =  hashMap[lexered[index]];
+        if(c!=NULL) {
+            index += c.execute();
+        }
+    }
+}
+>>>>>>> Stashed changes
