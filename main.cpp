@@ -19,7 +19,7 @@ map<string, Command *> initilize();
 int main(int argc, char *argv[]) {
     vector<string> v = lexer(argv[1]);
     map<string, Command *> hashMap = initilize();
-  //  parser(v, hashMap);
+    parser(v, hashMap);
     return 0;
 }
 
@@ -47,10 +47,15 @@ vector<string> lexer(char *filename) {
 void parser(vector<string> lexered, map<string, Command *> hashMap) {
     int index = 0;
     while (index < lexered.size()) {
-        Command *c = hashMap[lexered[index]];
-        if (c != NULL) {
-            index += c->execute(lexered, index);
+        if (hashMap.count(lexered[index])){
+            Command *c = hashMap[lexered[index]];
+            if (c != NULL) {
+                index += c->execute(lexered, index);
+            }
+        } else{
+            ++index;
         }
+
     }
 }
 
