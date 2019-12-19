@@ -5,6 +5,11 @@
 #include "OpenServerCommand.h"
 #include "DefineVarCommand.h"
 #include "ConnectCommand.h"
+#include "PrintCommand.h"
+#include "SleepCommand.h"
+#include "WhileCommand.h"
+#include "AssignmentCommand.h"
+#include "IfCommand.h"
 #include <map>
 
 using namespace std;
@@ -47,12 +52,12 @@ vector<string> lexer(char *filename) {
 void parser(vector<string> lexered, map<string, Command *> hashMap) {
     int index = 0;
     while (index < lexered.size()) {
-        if (hashMap.count(lexered[index])){
+        if (hashMap.count(lexered[index])) {
             Command *c = hashMap[lexered[index]];
             if (c != NULL) {
                 index += c->execute(lexered, index);
             }
-        } else{
+        } else {
             ++index;
         }
 
@@ -67,5 +72,13 @@ map<string, Command *> initilize() {
     hash.insert({"openDataServer", c});
     c = new ConnectCommand();
     hash.insert({"connectControlClient", c});
+    c = new PrintCommand();
+    hash.insert({"Print", c});
+    c = new SleepCommand();
+    hash.insert({"Sleep", c});
+    c = new WhileCommand();
+    hash.insert({"while", c});
+    c = new IfCommand();
+    hash.insert({"if", c});
     return hash;
 }
