@@ -5,21 +5,23 @@
 #ifndef EX3_CONNECTCOMMAND_H
 #define EX3_CONNECTCOMMAND_H
 
+
+#include "Command.h"
 #include <sys/socket.h>
 #include <string>
 #include <iostream>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include "Command.h"
+#include <cstring>
 
 class ConnectCommand : public Command {
 public:
     ConnectCommand();
+
     int execute(vector<string> v, int index) override;
 
-    int clientConnect(int port, char const *ip);
-
+   static  int clientStart(int port, const char *ip);
 };
 
 

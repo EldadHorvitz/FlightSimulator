@@ -2,35 +2,35 @@
 // Created by nizan on 18/12/2019.
 //
 
-#include <iostream>
-#include "OpenServerCommand.h"
-#include <sys/socket.h>
-#include <string>
-#include <unistd.h>
-#include <netinet/in.h>
+
+#include <thread>
 #include <cstring>
+#include "OpenServerCommand.h"
 
 OpenServerCommand::OpenServerCommand() {
     this->parmeterNum = 1;
 }
 
 int OpenServerCommand::execute(vector<string> v, int index) {
-    cout<<parmeterNum<<endl;
-    int portNum=stoi(v[index+1]);
-    int result=server(portNum);
-    if (result==0) {
+    cout << parmeterNum << endl;
+    int portNum = stoi(v[index + 1]);
+    thread *t1 = new thread(serverStart, portNum);
+    t1->join();
+    int result = 0;
+    if (result == 0) {
         return this->parmeterNum + 1;
-    } else{
+    } else {
         throw "error";
     }
 }
-int OpenServerCommand::server(int portNum)
-{
+
+
+int OpenServerCommand::serverStart(int portNum) {
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
         //error
-        std::cerr << "Could not create a socket"<<std::endl;
+        std::cerr << "Could not create a socket" << std::endl;
         return -1;
     }
 
@@ -45,24 +45,24 @@ int OpenServerCommand::server(int portNum)
 
     //the actual bind command
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
-        std::cerr<<"Could not bind the socket to an IP"<<std::endl;
+        std::cerr << "Could not bind the socket to an IP" << std::endl;
         return -2;
     }
 
     //making socket listen to the port
     if (listen(socketfd, 5) == -1) { //can also set to SOMAXCON (max connections)
-        std::cerr<<"Error during listening command"<<std::endl;
+        std::cerr << "Error during listening command" << std::endl;
         return -3;
-    } else{
-        std::cout<<"Server is now listening ..."<<std::endl;
+    } else {
+        std::cout << "Server is now listening ..." << std::endl;
     }
 
     // accepting a client
-    int client_socket = accept(socketfd, (struct sockaddr *)&address,
-                               (socklen_t*)&address);
+    int client_socket = accept(socketfd, (struct sockaddr *) &address,
+                               (socklen_t *) &address);
 
     if (client_socket == -1) {
-        std::cerr<<"Error accepting client"<<std::endl;
+        std::cerr << "Error accepting client" << std::endl;
         return -4;
     }
 
@@ -70,13 +70,13 @@ int OpenServerCommand::server(int portNum)
 
     //reading from client
     char buffer[1024] = {0};
-    int valread = read( client_socket , buffer, 1024);
-    std::cout<<buffer<<std::endl;
+    int valread = read(client_socket, buffer, 1024);
+    std::cout << buffer << std::endl;
 
     //writing back to client
     char *hello = "";
     send(client_socket , hello , strlen(hello) , 0 );
-    std::cout<<"Hello message sent\n"<<std::endl;
+    std::cout << "Hello message sent\n" << std::endl;
     return 0;
 
 }
