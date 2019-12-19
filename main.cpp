@@ -22,7 +22,7 @@ map<string, Command *> initilize();
 
 
 int main(int argc, char *argv[]) {
-    if (argc == 0) {
+    if (argc < 2) {
         throw "error-no filename given";
     }
     vector<string> v = lexer(argv[1]);
