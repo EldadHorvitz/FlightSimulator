@@ -22,8 +22,7 @@ public:
 
     int execute(vector<string> v, int index) override;
 
-    int clientStart(int port, const char *ip);
-
+   static  int clientStart(int port, const char *ip);
 };
 
 

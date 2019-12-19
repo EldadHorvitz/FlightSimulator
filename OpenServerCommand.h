@@ -7,13 +7,21 @@
 
 
 #include "Command.h"
+#include <sys/socket.h>
+#include <string>
+#include <iostream>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <iostream>
 
 class OpenServerCommand : public Command {
 
 public:
     OpenServerCommand();
+
     int execute(vector<string> v, int index) override;
-    int server(int portNum);
+
+    static int serverStart(int portNum);
 };
 
 

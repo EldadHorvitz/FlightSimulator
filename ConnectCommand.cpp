@@ -13,12 +13,13 @@ int ConnectCommand::execute(vector<string> v, int index) {
     int port = stoi(v[index + 2]);
     std::string str = v[index + 1];
     const char *cstr = str.c_str();
-    thread t1(clientStart, port, cstr);
+    thread* t1=new thread(clientStart, port, cstr);
+    t1->join();
     return parmeterNum + 1;
 }
 
 
-int clientStart(int port, const char *ip) {
+ int ConnectCommand::clientStart(int port, const char *ip) {
     //create socket
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (client_socket == -1) {
