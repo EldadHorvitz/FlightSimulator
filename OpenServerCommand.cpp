@@ -17,14 +17,14 @@ OpenServerCommand::OpenServerCommand() {
 int OpenServerCommand::execute(vector<string> v, int index) {
     cout<<parmeterNum<<endl;
     int portNum=stoi(v[index+1]);
-    int result= server(portNum);
+    int result=server(portNum);
     if (result==0) {
         return this->parmeterNum + 1;
     } else{
         throw "error";
     }
 }
-int server(int portNum)
+int OpenServerCommand::server(int portNum)
 {
     //create socket
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -74,8 +74,8 @@ int server(int portNum)
     std::cout<<buffer<<std::endl;
 
     //writing back to client
-   // char *hello = "";
-  //  send(client_socket , hello , strlen(hello) , 0 );
+    char *hello = "";
+    send(client_socket , hello , strlen(hello) , 0 );
     std::cout<<"Hello message sent\n"<<std::endl;
     return 0;
 
