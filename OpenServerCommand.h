@@ -13,6 +13,7 @@ class OpenServerCommand : public Command {
 public:
     OpenServerCommand();
     int execute(vector<string> v, int index) override;
+    int server(int portNum);
 };
 
 
