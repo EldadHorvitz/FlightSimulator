@@ -22,6 +22,9 @@ map<string, Command *> initilize();
 
 
 int main(int argc, char *argv[]) {
+    if (argc == 0) {
+        throw "error-no filename given";
+    }
     vector<string> v = lexer(argv[1]);
     map<string, Command *> hashMap = initilize();
     parser(v, hashMap);
