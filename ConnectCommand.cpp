@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <thread>
 #include "ConnectCommand.h"
 
 ConnectCommand::ConnectCommand() {

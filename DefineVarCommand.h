@@ -10,6 +10,8 @@
 
 class DefineVarCommand : public Command {
 public:
+    double val;
+    string name;
     DefineVarCommand();
 
     int execute(vector<string> v, int index) override;

@@ -50,7 +50,7 @@ int OpenServerCommand::serverStart(int portNum) {
     }
 
     //making socket listen to the port
-    if (listen(socketfd, 5) == -1) { //can also set to SOMAXCON (max connections)
+    if (listen(socketfd, 1) == -1) { //can also set to SOMAXCON (max connections)
         std::cerr << "Error during listening command" << std::endl;
         return -3;
     } else {
@@ -58,13 +58,15 @@ int OpenServerCommand::serverStart(int portNum) {
     }
 
     // accepting a client
+    int add= sizeof(address);
     int client_socket = accept(socketfd, (struct sockaddr *) &address,
-                               (socklen_t *) &address);
+                               (socklen_t *) &add);
 
     if (client_socket == -1) {
         std::cerr << "Error accepting client" << std::endl;
         return -4;
     }
+    std::cout << "Server is now listening !!!!!!!!!!!" << std::endl;
 
     close(socketfd); //closing the listening socket
 
