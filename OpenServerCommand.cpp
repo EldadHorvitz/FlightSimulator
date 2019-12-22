@@ -5,6 +5,9 @@
 
 #include <thread>
 #include "OpenServerCommand.h"
+#include <cstring>
+#include <mutex>
+#include <arpa/inet.h>
 
 OpenServerCommand::OpenServerCommand() {
     this->parmeterNum = 1;
@@ -13,8 +16,9 @@ OpenServerCommand::OpenServerCommand() {
 int OpenServerCommand::execute(vector<string> v, int index) {
     cout << parmeterNum << endl;
     int portNum = stoi(v[index + 1]);
-    thread *t1 = new thread(serverStart, portNum);
-    t1->join();
+    //  thread *t1 = new thread(serverStart, portNum);
+    //t1->join();
+    serverStart(portNum);
     int result = 0;
     if (result == 0) {
         return this->parmeterNum + 1;
@@ -37,7 +41,8 @@ int OpenServerCommand::serverStart(int portNum) {
     // we first need to create the sockaddr obj.
     sockaddr_in address; //in means IP4
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY; //give me any IP allocated for my machine
+    address.sin_addr.s_addr = inet_addr("127.0.0.1");
+    //   address.sin_addr.s_addr= INADDR_ANY; //give me any IP allocated for my machine
     address.sin_port = htons(portNum);
     //we need to convert our number
     // to a number that the network understands.
@@ -59,12 +64,10 @@ int OpenServerCommand::serverStart(int portNum) {
     // accepting a client
     int client_socket = accept(socketfd, (struct sockaddr *) &address,
                                (socklen_t *) &address);
-
     if (client_socket == -1) {
         std::cerr << "Error accepting client" << std::endl;
         return -4;
     }
-
     close(socketfd); //closing the listening socket
 
     //reading from client
@@ -77,5 +80,4 @@ int OpenServerCommand::serverStart(int portNum) {
     //  send(client_socket , hello , strlen(hello) , 0 );
     std::cout << "Hello message sent\n" << std::endl;
     return 0;
-
 }

@@ -85,3 +85,4 @@ map<string, Command *> initilize() {
     hash.insert({"if", c});
     return hash;
 }
+
