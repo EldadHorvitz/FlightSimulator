@@ -2,7 +2,9 @@
 // Created by nizan on 18/12/2019.
 //
 
-
+#include <iostream>
+#include <cstring>
+#include <thread>
 #include "ConnectCommand.h"
 
 ConnectCommand::ConnectCommand() {

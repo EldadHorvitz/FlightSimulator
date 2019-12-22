@@ -5,8 +5,7 @@
 #ifndef EX3_CONNECTCOMMAND_H
 #define EX3_CONNECTCOMMAND_H
 
-#include <iostream>
-#include <thread>
+
 #include "Command.h"
 #include <sys/socket.h>
 #include <string>

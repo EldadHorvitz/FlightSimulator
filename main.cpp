@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
     }
     vector<string> v = lexer(argv[1]);
     map<string, Command *> hashMap = initilize();
+    map<string, Command *> varsMap;
     parser(v, hashMap);
     return 0;
 }
@@ -38,13 +39,21 @@ vector<string> lexer(char *filename) {
     int indexVector = 0;
     char c = file.get();
     string temp = "";
+    int flag=1;
     while (c != EOF) {
-        if (c == ' ' || c == '(' || c == ')' || c == ',') {
+        if ((c == ' ' || c == '(' || c == ')' || c == ',')&&flag) {
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
+            flag=0;
         } else if (c != '\n') {
             temp += c;
+        } else  {
+
+            vector1.insert(vector1.begin() + indexVector, temp);
+            temp = "";
+            indexVector++;
+            flag=1;
         }
         c = file.get();
     }

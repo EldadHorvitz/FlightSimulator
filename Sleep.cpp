@@ -5,6 +5,5 @@
 #include "Sleep.h"
 
 int Sleep::execute(vector<string> v, int index) {
-sleep_for();
 
 }

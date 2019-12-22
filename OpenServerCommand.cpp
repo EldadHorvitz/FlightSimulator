@@ -16,9 +16,8 @@ OpenServerCommand::OpenServerCommand() {
 int OpenServerCommand::execute(vector<string> v, int index) {
     cout << parmeterNum << endl;
     int portNum = stoi(v[index + 1]);
-    //  thread *t1 = new thread(serverStart, portNum);
-    //t1->join();
-    serverStart(portNum);
+    thread *t1 = new thread(serverStart, portNum);
+    t1->join();
     int result = 0;
     if (result == 0) {
         return this->parmeterNum + 1;
@@ -80,4 +79,5 @@ int OpenServerCommand::serverStart(int portNum) {
     //  send(client_socket , hello , strlen(hello) , 0 );
     std::cout << "Hello message sent\n" << std::endl;
     return 0;
+
 }
