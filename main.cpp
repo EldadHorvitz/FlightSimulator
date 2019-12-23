@@ -12,6 +12,7 @@
 #include "IfCommand.h"
 #include <map>
 
+
 using namespace std;
 
 vector<string> lexer(char *string);
@@ -39,21 +40,21 @@ vector<string> lexer(char *filename) {
     int indexVector = 0;
     char c = file.get();
     string temp = "";
-    int flag=1;
+    int flag = 1;
     while (c != EOF) {
-        if ((c == ' ' || c == '(' || c == ')' || c == ',')&&flag) {
+        if ((c == ' ' || c == '(' || c == ')' || c == ',') && flag) {
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
-            flag=0;
+            flag = 0;
         } else if (c != '\n') {
             temp += c;
-        } else  {
+        } else {
 
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
-            flag=1;
+            flag = 1;
         }
         c = file.get();
     }
