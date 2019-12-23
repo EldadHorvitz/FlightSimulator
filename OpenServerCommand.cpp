@@ -19,8 +19,8 @@ int OpenServerCommand::execute(vector<string> v, int index) {
 
     cout << parmeterNum << endl;
     int portNum = stoi(v[index + 1]);
-      thread *t1 = new thread(serverStart, portNum);
-     t1->join();
+    thread *t1 = new thread(serverStart, portNum);
+    t1->join();
     int result = 0;
     if (result == 0) {
         return this->parmeterNum + 1;
@@ -31,8 +31,6 @@ int OpenServerCommand::execute(vector<string> v, int index) {
 
 
 int OpenServerCommand::serverStart(int portNum) {
-    int m_fd;
-    bool m_connected = false;
 
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
@@ -69,8 +67,12 @@ int OpenServerCommand::serverStart(int portNum) {
         cerr << "Error accepting" << endl;
         return -1;
     }
-    m_fd = client_socket;
-    m_connected = true;
+    close(socketfd);
+    //reading from client
+    char buffer[1024] = {0};
+    int valread = read(client_socket, buffer, 1024);
+    std::cout << buffer << std::endl;
+
     return 1;
 }
 
