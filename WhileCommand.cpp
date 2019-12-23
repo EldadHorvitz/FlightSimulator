@@ -5,10 +5,10 @@
 #include <iostream>
 #include "WhileCommand.h"
 
-WhileCommand::WhileCommand() { this->parmeterNum = 2; }
+WhileCommand::WhileCommand() {  }
 
 int WhileCommand::execute(vector<string> v, int index) {
-    cout << parmeterNum << endl;
 
-    return this->parmeterNum;
+
+    return 2;
 }

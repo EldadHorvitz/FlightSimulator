@@ -20,18 +20,22 @@ int PrintCommand::execute(vector<string> v, int index) {
             i++;
             c = v[index + 1][i];
         }
-        if (varsmap.count(name)) {
-            cout << varsmap[name].getVal();
-        }
+//        if (varsmap.count(name)) {
+//            cout << varsmap[name].getVal();
+//        }
+        name = "";
         if (c == '"') {
             i++;
             c = v[index + 1][i];
             while (c != '"' && c != ')') {
-                cout << c;
+                name += c;
                 i++;
                 c = v[index + 1][i];
             }
-            cout << "\n";
+            if (c!=')'){
+                cout << name<<endl;
+            }
+
         }
     }
     return 2;

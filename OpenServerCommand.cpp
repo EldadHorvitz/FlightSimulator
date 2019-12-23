@@ -8,17 +8,17 @@
 #include "OpenServerCommand.h"
 
 OpenServerCommand::OpenServerCommand() {
-    this->parmeterNum = 1;
+
 }
 
 int OpenServerCommand::execute(vector<string> v, int index) {
-    cout << parmeterNum << endl;
+
     int portNum = stoi(v[index + 1]);
     thread *t1 = new thread(serverStart, portNum);
     t1->join();
     int result = 0;
     if (result == 0) {
-        return this->parmeterNum + 1;
+        return 2;
     } else {
         throw "error";
     }

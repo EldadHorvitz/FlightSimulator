@@ -5,9 +5,9 @@
 #include <iostream>
 #include "SleepCommand.h"
 
-SleepCommand::SleepCommand() { this->parmeterNum = 1; }
+SleepCommand::SleepCommand() { }
 
 int SleepCommand::execute(vector<string> v, int index) {
-    cout << parmeterNum << endl;
-    return this->parmeterNum;
+
+    return 2;
 }

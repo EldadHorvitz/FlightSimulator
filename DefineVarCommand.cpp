@@ -6,7 +6,7 @@
 #include "DefineVarCommand.h"
 #include "Var.h"
 
-DefineVarCommand::DefineVarCommand() { this->parmeterNum = 4; }
+DefineVarCommand::DefineVarCommand() {}
 
 int DefineVarCommand::execute(vector<string> v, int index) {
     int i = 0;

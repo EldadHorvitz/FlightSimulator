@@ -8,7 +8,7 @@
 #include "ConnectCommand.h"
 
 ConnectCommand::ConnectCommand() {
-    this->parmeterNum = 2;
+
 }
 
 int ConnectCommand::execute(vector<string> v, int index) {
@@ -18,7 +18,7 @@ int ConnectCommand::execute(vector<string> v, int index) {
       thread *t1 = new thread(clientStart, port, cstr);
      t1->join();
 
-    return parmeterNum + 1;
+    return 2;
 }
 
 
