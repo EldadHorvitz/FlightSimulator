@@ -1,32 +1,38 @@
 //
-// Created by nizan on 06/11/2019.
+// Created by eldad on 10/11/2019.
 //
 
-#ifndef UNTITLED__INTERPRETER_H_
-#define UNTITLED__INTERPRETER_H_
+#ifndef UNTITLED1_INTERPRETER_H
+#define UNTITLED1_INTERPRETER_H
+
 
 #include <stack>
 #include <queue>
 #include <array>
 #include "Expression.h"
-#include "map"
 #include "Var.h"
+#include <map>
 
 class Interpreter {
- private:
-  stack<string> operators;
-  queue<string> output;
-  map<string, Var*> variables;
- public:
-  Interpreter();
-  Expression *interpret(string,map<string, Var *> *varsMap);
-  int presedence(char);
-  virtual ~Interpreter();
-  void setVariables(string);
-  int numCounter(string phrase);
-  int varCounter(string phrase);
-  bool isNumber(string phrase);
-  bool isOperator(string op1, char op2);
+private:
+    stack<string> operatorsStack;
+    queue<string> numbersQueue;
+    map<string, double> vars;
+public:
+    Interpreter();
+
+    virtual ~Interpreter();
+
+    void setVariables(string);
+    void addVariable(string input);
+    Expression *interpret(string,map<string, Var *> *varsMap);
+    bool isOperator(char c);
+    bool isOperatorStr(string s);
+    bool isNum(string s);
+    bool isLetter(char c);
+    bool priority(string f, string s);
+    string updateOp(string exp,int i);
 };
 
-#endif //UNTITLED__INTERPRETER_H_
+
+#endif //UNTITLED1_INTERPRETER_H

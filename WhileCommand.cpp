@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <algorithm>
 #include "WhileCommand.h"
 #include "Interpreter.h"
 #include "Plus.h"
@@ -20,41 +19,79 @@
 
 WhileCommand::WhileCommand() {}
 
-int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+int WhileCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
+    int num=0;
+    while (v[num+index]!="}"){
+        num++;
+    }
     string expfirst = "";
     string expsecond = "";
-    char identifier;
-    int counter = 1;
+    string identifier="";
+    int counter = 0;
     for (char c: v[index + 1]) {
         counter++;
         if (c == '<' || c == '>' || c == '!' || c == '=') {
-            identifier = c;
+            identifier += c;
             break;
         }
-        expfirst += c;
-    }
-    std::string::iterator end_pos = std::remove(expfirst.begin(), expfirst.end(), ' ');
-    expfirst.erase(end_pos, expfirst.end());
+        if (c!=' '){
+            expfirst += c;
+        }
 
-    for (char c: v[index + 1].substr(counter, v[index + 1].length())) {
+    }
+    string s=v[index + 1].substr(counter, 1);
+    if (s == "<" || s == ">" || s == "!" || s == "="){
+        identifier+=s;
+    }
+
+
+    for (char c: v[index + 1].substr(counter+1, v[index + 1].length()-counter)) {
         if (c == '{') {
             break;
         }
-        expsecond += c;
+        if (c!=' '){
+            expsecond += c;
+        }
     }
-    end_pos = std::remove(expfirst.begin(), expfirst.end(), ' ');
-    expsecond.erase(end_pos, expfirst.end());
-
-
     Interpreter *i1 = new Interpreter();
     Interpreter *i2 = new Interpreter();
 
-    Expression *first = i1->interpret(expfirst, varsMap);
+    Expression *first = i1->interpret(expfirst,varsMap);
 
-    Expression *second = i2->interpret(expsecond, varsMap);
+    Expression *second = i2->interpret(expsecond,varsMap);
+    cout<<first->calculate()<<identifier<<second->calculate()<<endl;
 
-    cout << first->calculate() << endl;
+    if (identifier=="=="){
+        while (first->calculate()==second->calculate()){
 
+        }
 
-    return 2;
+    } else if (identifier=="!="){
+        while (first->calculate()!=second->calculate()){
+
+        }
+
+    }else if (identifier=="<="){
+        while (first->calculate()<=second->calculate()){
+
+        }
+
+    } else if (identifier==">="){
+        while (first->calculate()>=second->calculate()){
+
+        }
+
+    } else if (identifier==">"){
+        while (first->calculate()>second->calculate()){
+
+        }
+
+    }else if (identifier=="<"){
+        while (first->calculate()<second->calculate()){
+
+        }
+
+    }
+
+    return num;
 }

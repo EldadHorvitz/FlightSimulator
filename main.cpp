@@ -70,7 +70,12 @@ void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, 
         if (hashMap.count(lexered[index])) {
             Command *c = hashMap[lexered[index]];
             if (c != NULL) {
-                index += c->execute(lexered, index,varsMap,simMap);
+                try{
+                    index += c->execute(lexered, index,varsMap,simMap);
+                }
+                catch (const char * e){
+                    cout<< e;
+                }
             }
         } else if(varsMap->count(lexered[index])){
             Command *c = new AssignmentCommand();
@@ -104,6 +109,7 @@ map<string, Command *> initilize() {
     hash.insert({"while", c});
     c = new IfCommand();
     hash.insert({"if", c});
+
     return hash;
 }
 

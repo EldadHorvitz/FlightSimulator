@@ -2,335 +2,288 @@
 // Created by nizan on 06/11/2019.
 //
 
-#include <string>
-#include <sstream>
-#include <algorithm>
 #include "Interpreter.h"
-#include "Plus.h"
 #include "Value.h"
 #include "Mul.h"
+#include "Plus.h"
+#include "UPlus.h"
 #include "Div.h"
 #include "Minus.h"
+#include "UMinus.h"
+#include <sstream>
 
 Interpreter::Interpreter() {
-}
 
-Expression *Interpreter::interpret(string phrase, map<string, Var *> *varsMap) {
-    string number;
-    string var;
-    int counterNum = 0;
-    int counterVar = 0;
-    int stringPos = 0;
-    //converting to postfix
-    for (char &c : phrase) {
-        if (counterNum > 1) {
-            counterNum--;
-            stringPos++;
-            continue;
-        }
-        //if its a number
-        if (isdigit(c)) {
-            counterNum = this->numCounter(phrase.substr(stringPos, phrase.length() - 1));
-            number.append(phrase.substr(stringPos, counterNum));
-            this->output.push(number);
-            number.clear();
-        }
-
-            //if its an variable
-        else if (isalpha(c)) {
-            counterVar = this->varCounter(phrase.substr(stringPos, phrase.length() - 1));
-            var.append(phrase.substr(stringPos, counterVar));
-            if (varsMap->count(var)) {
-                double value = (*varsMap)[var]->getVal();
-                std::ostringstream strs;
-                strs << value;
-                std::string str = strs.str();
-                this->output.push(str);
-                phrase = phrase.substr(counterVar, phrase.size());
-                if (phrase == " ") {
-                    break;
-                }
-            } else {
-                throw "illegal math expression";
-            }
-            var.clear();
-        }
-
-            //if its an opertaor
-        else if (c == '*' || c == '/' || c == '-' || c == '+') {
-            //cases for UMinus
-            if (stringPos == 0 && c == '-') {
-                this->operators.push("#");
-                stringPos++;
-                continue;
-            }
-
-            if (!this->operators.empty()) {
-                if (this->operators.top() == "(" && c == '-') {
-                    this->operators.push("#");
-                    stringPos++;
-                    continue;
-                }
-            }
-            //checking for double opertators
-            if (!this->operators.empty()) {
-                if (isOperator(this->operators.top(), c)) {
-                    throw "illegal math expression";
-                }
-                /*
-                 *   if (this->operators.top() == "*" && c == '*') {
-                  throw "illegal math expression";
-                } else if (this->operators.top() == "/" && c == '/') {
-                  throw "illegal math expression";
-                } else if (this->operators.top() == "-" && c == '-') {
-                  throw "illegal math expression";
-                } else if (this->operators.top() == "+" && c == '+') {
-                  throw "illegal math expression";
-                } else
-                 */
-            }
-
-            while (presedence(c)) {
-                string temp = this->operators.top();
-                this->operators.pop();
-                this->output.push(temp);
-            }
-            this->operators.push(string(1, c));
-        } else if (c == '(') {
-            this->operators.push(string(1, c));
-        } else if (c == ')') {
-            while (this->operators.top() != "(") {
-                string temp = this->operators.top();
-                this->operators.pop();
-                this->output.push(temp);
-            }
-            this->operators.pop();
-        } else {
-            throw "bad input";
-        }
-        stringPos++;
-    }
-    //now the queue is postfix, we will convert it to Expression stack
-    while (!this->operators.empty()) {
-        string temp = this->operators.top();
-        this->operators.pop();
-        this->output.push(temp);
-    }
-    stack<Expression *> experession;
-    Expression *tempa;
-    Expression *tempb;
-    while (!this->output.empty()) {
-        if (isNumber(this->output.front())) {
-            string temp = this->output.front();
-            this->output.pop();
-            experession.push(new Value(stod(temp)));
-            continue;
-        }
-
-//if its a variable
-        if (isalpha(this->output.front().at(0))) {
-            string temp = this->output.front();
-            this->output.pop();
-            experession.push(new Value(this->variables[temp]->getVal()));
-        }
-        switch (this->output.front().at(0)) {
-            case '*':
-                this->output.pop();
-                tempa = experession.top();
-                experession.pop();
-                tempb = experession.top();
-                experession.pop();
-                experession.push(new Mul(tempb, tempa));
-                break;
-            case '+':
-                this->output.pop();
-                tempa = experession.top();
-                experession.pop();
-                tempb = experession.top();
-                experession.pop();
-                experession.push(new Plus(tempb, tempa));
-                break;
-            case '/':
-                this->output.pop();
-                tempa = experession.top();
-                experession.pop();
-                tempb = experession.top();
-                experession.pop();
-                experession.push(new Div(tempb, tempa));
-                break;
-            case '-':
-                this->output.pop();
-                tempa = experession.top();
-                experession.pop();
-                tempb = experession.top();
-                experession.pop();
-                experession.push(new Minus(tempb, tempa));
-                break;
-            case '#':
-                this->output.pop();
-                tempa = experession.top();
-                experession.pop();
-                experession.push(new Value(tempa->calculate() * -1));
-                break;
-            case '$':
-                this->output.pop();
-                tempa = experession.top();
-                experession.pop();
-                experession.push(new Value(tempa->calculate()));
-                break;
-        }
-    }
-    return experession.top();
-}
-
-int Interpreter::numCounter(string phrase) {
-    int counterNum = 0;
-    for (char &c : phrase) {
-        //if its a number
-        if (isdigit(c) || c == '.') {
-            counterNum++;
-        } else {
-            break;
-        }
-    }
-    return counterNum;
-}
-
-int Interpreter::varCounter(string phrase) {
-    int counterVar = 0;
-    for (char &c : phrase) {
-        //if its a number
-        if (c != '(' && c != ')' && c != '*' && c != '+' && c != '-' && c != '/') {
-            counterVar++;
-        } else {
-            break;
-        }
-    }
-    return counterVar;
-}
-
-int Interpreter::presedence(char s) {
-    if (this->operators.empty()) {
-        return 0;
-    }
-    if (this->operators.top().at(0) == '*' || this->operators.top().at(0) == '/' || this->operators.top().at(0)
-                                                                                    == '#' ||
-        this->operators.top().at(0) == '$') {
-        if (s == '+' || s == '-') {
-            return 1;
-        }
-    }
-    return 0;
-}
-
-bool Interpreter::isNumber(string phrase) {
-    if (phrase.empty()) {
-        return false;
-    }
-    for (char &c:phrase) {
-        if (!isdigit(c) && c != '.') {
-            return false;
-        }
-    }
-    return true;
 }
 
 Interpreter::~Interpreter() {
 
 }
 
-void Interpreter::setVariables(string assignment) {
-/*
-  int counter = 0;
-  int length = assignment.length();
-  for (char &c: assignment) {
-    if (c == ';') {
-      counter++;
-    }
-  }
-  string *strings = new string[counter + 1];
-  // string strings[counter + 1];
-  int counterl = 0;
-  int start = 0;
-  for (int i = 0; i < length; i++) {
-    if (assignment[i] == ';') {
-      strings[counterl] = assignment.substr(start, i);
-      start = i + 1;
-      counterl++;
-    }
-    if (counterl == counter) {
-      strings[counterl] = assignment.substr(start, assignment.length());
-    }
-  }
+bool Interpreter::isOperator(char c) {
+    return (c == '+' || c == '*' || c == '/' || c == '-');
+}
 
-  for (int j = 0; j <= counter; j++) {
-    string temp;
-    double value;
-    string token = strings[j];
-    if (!isalpha(token[0])) {
-      throw "illegal variable assignment!";
-    } else {
-      temp = token[0];
-    }
-    int counti;
-    for (unsigned int i = 0; i < token.length(); i++) {
-      if (token[i] == '=') {
-        if (!isdigit(token[i + 1])) {
-          throw "illegal variable assignment!";
-        } else {
-          counti = i;
-          break;
+bool Interpreter::isOperatorStr(string s) {
+    return (s == "+" || s == "*" || s == "/" || s == "-" || s == "~" || s == "#");
+}
+
+bool Interpreter::isNum(string s) {
+    for (char c:s) {
+        if (!isdigit(c) && (c != '.')) {
+            return false;
         }
-      }
+    }
+    return true;
+}
+
+bool Interpreter::isLetter(char c) {
+    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+
+}
+
+void Interpreter::setVariables(string input) {
+
+    int begin = 0;
+    for ( unsigned int i = 0; i < input.length(); i++) {
+        if (input[i] == ';') {
+            this->addVariable(input.substr(begin, i - begin));
+            begin = i + 1;
+        }
+        if (i == input.length() - 1) {
+            this->addVariable(input.substr(begin, input.length() - begin));
+        }
     }
 
-    temp = token.substr(0, counti);
-    int counterendassign = 0;
-    for (unsigned int i = 0; i < token.length(); i++) {
-      if (token[i] == ';') {
-        counterendassign = i - 1;
-        break;
-      }
+}
 
-    }
-    string valuestr = token.substr(counti + 1, counterendassign - 1);
-    counterendassign = 0;
-
-    int countdot = 0;
-    for (unsigned int i = 0; i < valuestr.length(); i++) {
-      if (valuestr[i] == '.') {
-        countdot++;
-      }
-    }
-    if (countdot > 1) {
-      throw "illegal variable assignment!";
-    }
-    countdot = 0;
-    for (unsigned int i = 0; i < valuestr.length(); i++) {
-      if (!isdigit(valuestr[i]) && valuestr[i] != '.') {
-        throw "illegal variable assignment!";
-      }
-    }
-
-    stringstream convert(valuestr);
-    convert >> value;
-    if (!this->variables.count(temp)) {
-
-      this->variables.insert(std::pair<string, double>(temp, value));
+void Interpreter::addVariable(string str) {
+    /*
+    double number;
+    int index = 0;
+    if (!this->isLetter(str[0])) {
+        throw "bad input";
     } else {
-      this->variables.erase(temp);
-      this->variables.insert(std::pair<string, double>(temp, value));
+        for (unsigned int i = 0; i < str.length(); i++) {
+            if (str[i] == '=') {
+                index = i;
+                break;
+            }
+        }
     }
-  }
+    if (index == 0) {
+        throw "bad input";
+    }
+    if (!this->isNum(str.substr(index + 1, str.length() - index - 1))) {
+        throw "illegal variable assignment!";
+    }
+    string valuestr = str.substr(index + 1, str.length() - index - 1);
+    stringstream convert(valuestr);
+    convert >> number;
+    string name = str.substr(0, index);
+    if (this->vars.count(name)) {
+        this->vars[name] = number;
+    } else {
+        this->vars.insert(std::pair<string, double>(name, number));
+    }
 */
 }
 
-bool Interpreter::isOperator(string op1, char op2) {
-    if (op1 == "+" || op1 == "*" || op1 == "/" || op1 == "-") {
-        if (op2 == '+' || op2 == '*' || op2 == '/' || op2 == '-') {
+bool Interpreter::priority(string f, string s) {
+    if (f == "*" || f == "/" || f == "~" || f == "#") {
+        if (s == "+" || s == "-") {
             return true;
         }
     }
     return false;
+}
+
+string Interpreter::updateOp(string exp, int index) {
+
+    switch (exp[index]) {
+        case '+':
+            if (index == 0) {
+                return "#";
+            } else if (exp[index - 1] == '(') {
+                return "#";
+            } else {
+                return "+";
+            }
+        case '-':
+            if (index == 0) {
+                return "~";
+            } else if (exp[index - 1] == '(') {
+                return "~";
+            } else {
+                return "-";
+            }
+        case '*':
+            return "*";
+        case '/':
+            return "/";
+        case '(':
+            return "(";
+        case ')':
+            return ")";
+        default:
+            return "";
+    }
+}
+
+Expression *Interpreter::interpret(string exp,map<string, Var *> *varsMap) {
+    for (unsigned int i = 0; i < exp.length(); i++) {
+        char c = exp[i];
+        if (isdigit(c)) {
+            int index = i;
+            while (isdigit(c) || (c == '.')) {
+                i++;
+                c = exp[i];
+            }
+            this->numbersQueue.push(exp.substr(index, i - index));
+            i--;
+        }
+            //if its an opertaor
+        else if (isOperator(c)) {
+            if (isOperator(exp[i + 1])) {
+                throw "illegal math expression";
+            }
+            string op = updateOp(exp, i);
+            if (!this->operatorsStack.empty()) {
+                while (priority(this->operatorsStack.top(), op) && !this->operatorsStack.empty()) {
+                    string temp = this->operatorsStack.top();
+                    this->operatorsStack.pop();
+                    this->numbersQueue.push(temp);
+                }
+            }
+            this->operatorsStack.push(op);
+        } else if (isLetter(c)) {
+            int index = i;
+            while (!(isOperator(c)) && c != '(' && c != ')') {
+                i++;
+                c = exp[i];
+            }
+            string varName = exp.substr(index, i - index-1);
+            if (!(varsMap->count(varName))) {
+                throw "bad input";
+            } else {
+                this->numbersQueue.push(varName);
+            }
+            i--;
+
+        } else if (c == '(') {
+            this->operatorsStack.push(exp.substr(i, 1));
+        } else if (c == ')') {
+            while (this->operatorsStack.top() != "(") {
+                string temp = this->operatorsStack.top();
+                if (this->operatorsStack.empty()) {
+                    throw "bad input";
+                }
+                this->operatorsStack.pop();
+                this->numbersQueue.push(temp);
+            }
+            this->operatorsStack.pop();
+        } else {
+            throw "bad input";
+        }
+    }
+    while (!this->operatorsStack.empty()) {
+        string temp = this->operatorsStack.top();
+        this->operatorsStack.pop();
+        this->numbersQueue.push(temp);
+    }
+    stack<Expression *> experessionStack;
+    Expression *first;
+    Expression *second;
+    while (!this->numbersQueue.empty()) {
+        if (isNum(this->numbersQueue.front())) {
+            string temp = this->numbersQueue.front();
+            this->numbersQueue.pop();
+            double number;
+            stringstream convert(temp);
+            convert >> number;
+            experessionStack.push(new Value(number));
+
+        } else if (varsMap->count(this->numbersQueue.front())) {
+            string temp = this->numbersQueue.front();
+            this->numbersQueue.pop();
+            experessionStack.push(new Value((*varsMap)[temp]->getVal()));
+
+        } else if (isOperatorStr(this->numbersQueue.front())) {
+            if (this->numbersQueue.front() == "*") {
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                this->numbersQueue.pop();
+                first = experessionStack.top();
+                experessionStack.pop();
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                second = experessionStack.top();
+                experessionStack.pop();
+                experessionStack.push(new Mul(second,first));
+            } else if (this->numbersQueue.front() == "/") {
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                this->numbersQueue.pop();
+                first = experessionStack.top();
+                experessionStack.pop();
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                second = experessionStack.top();
+                experessionStack.pop();
+                experessionStack.push(new Div(second,first));
+            } else if (this->numbersQueue.front() == "+") {
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                this->numbersQueue.pop();
+                first = experessionStack.top();
+                experessionStack.pop();
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                second = experessionStack.top();
+                experessionStack.pop();
+                experessionStack.push(new Plus(second,first));
+            } else if (this->numbersQueue.front() == "-") {
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                this->numbersQueue.pop();
+                first = experessionStack.top();
+                experessionStack.pop();
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                second = experessionStack.top();
+                experessionStack.pop();
+                experessionStack.push(new Minus(second,first));
+            } else if (this->numbersQueue.front() == "~") {
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                this->numbersQueue.pop();
+                first = experessionStack.top();
+                experessionStack.pop();
+                experessionStack.push(new UMinus(first));
+            } else if (this->numbersQueue.front() == "#") {
+                if (experessionStack.empty()) {
+                    throw "bad input";
+                }
+                this->numbersQueue.pop();
+                first = experessionStack.top();
+                experessionStack.pop();
+                experessionStack.push(new UPlus(first));
+            }
+
+        } else {
+            throw "bad input";
+        }
+    }
+
+    return experessionStack.top();
 
 }
