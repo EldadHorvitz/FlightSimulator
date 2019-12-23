@@ -20,32 +20,78 @@
 WhileCommand::WhileCommand() {}
 
 int WhileCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
+    int num=0;
+    while (v[num+index]!="}"){
+        num++;
+    }
     string expfirst = "";
     string expsecond = "";
-    char identifier;
-    int counter = 1;
+    string identifier="";
+    int counter = 0;
     for (char c: v[index + 1]) {
         counter++;
         if (c == '<' || c == '>' || c == '!' || c == '=') {
-            identifier = c;
+            identifier += c;
             break;
         }
-        expfirst += c;
+        if (c!=' '){
+            expfirst += c;
+        }
+
+    }
+    string s=v[index + 1].substr(counter, 1);
+    if (s == "<" || s == ">" || s == "!" || s == "="){
+        identifier+=s;
     }
 
 
-    for (char c: v[index + 1].substr(counter, v[index + 1].length())) {
+    for (char c: v[index + 1].substr(counter+1, v[index + 1].length()-counter)) {
         if (c == '{') {
             break;
         }
-        expsecond += c;
+        if (c!=' '){
+            expsecond += c;
+        }
     }
     Interpreter *i1 = new Interpreter();
     Interpreter *i2 = new Interpreter();
 
-    Expression *first = i1->interpret(expfirst);
+    Expression *first = i1->interpret(expfirst,varsMap);
 
-    Expression *second = i2->interpret(expsecond);
+    Expression *second = i2->interpret(expsecond,varsMap);
+    cout<<first->calculate()<<identifier<<second->calculate()<<endl;
 
-    return 2;
+    if (identifier=="=="){
+        while (first->calculate()==second->calculate()){
+
+        }
+
+    } else if (identifier=="!="){
+        while (first->calculate()!=second->calculate()){
+
+        }
+
+    }else if (identifier=="<="){
+        while (first->calculate()<=second->calculate()){
+
+        }
+
+    } else if (identifier==">="){
+        while (first->calculate()>=second->calculate()){
+
+        }
+
+    } else if (identifier==">"){
+        while (first->calculate()>second->calculate()){
+
+        }
+
+    }else if (identifier=="<"){
+        while (first->calculate()<second->calculate()){
+
+        }
+
+    }
+
+    return num;
 }
