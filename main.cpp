@@ -10,6 +10,7 @@
 #include "WhileCommand.h"
 #include "AssignmentCommand.h"
 #include "IfCommand.h"
+#include "Var.h"
 #include <map>
 
 using namespace std;
@@ -26,9 +27,10 @@ int main(int argc, char *argv[]) {
         throw "error-no filename given";
     }
     vector<string> v = lexer(argv[1]);
-    map<string, Command *> hashMap = initilize();
-    map<string, Command *> varsMap;
-    parser(v, hashMap);
+    map<string, Command *> commandsMap = initilize();
+    map<string, Var *> varsMap;
+    map<string, Var *> simMap;
+    parser(v, commandsMap);
     return 0;
 }
 
