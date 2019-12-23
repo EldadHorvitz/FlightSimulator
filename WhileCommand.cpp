@@ -17,7 +17,7 @@
 #include "Variable.h"
 #include "BinaryOperator.h"
 
-WhileCommand::WhileCommand() { this->parmeterNum = 2; }
+WhileCommand::WhileCommand() {  }
 
 int WhileCommand::execute(vector<string> v, int index) {
     string expfirst = "";
