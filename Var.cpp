@@ -14,6 +14,6 @@ void Var::setVal(double val) {
     Var::val = val;
 }
 
-double Var::getVal() const {
-    return val;
+double Var::getVal() {
+    return this->val;
 }

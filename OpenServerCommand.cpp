@@ -17,7 +17,6 @@ OpenServerCommand::OpenServerCommand() {
 int OpenServerCommand::execute(vector<string> v, int index) {
 
 
-
     int portNum = stoi(v[index + 1]);
     thread *t1 = new thread(serverStart, portNum);
     t1->join();

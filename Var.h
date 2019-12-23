@@ -11,18 +11,18 @@ using namespace std;
 
 
 class Var {
-public:
+private:
     double val;
     int dir;
     string path;
-
+public:
     virtual ~Var();
 
     Var(double val, int dir, const string &path);
 
     void setVal(double val);
 
-    double getVal() const;
+    double getVal();
 
 
 };

@@ -17,7 +17,7 @@
 #include "Variable.h"
 #include "BinaryOperator.h"
 
-WhileCommand::WhileCommand() {  }
+WhileCommand::WhileCommand() {}
 
 int WhileCommand::execute(vector<string> v, int index) {
     string expfirst = "";
@@ -40,10 +40,11 @@ int WhileCommand::execute(vector<string> v, int index) {
         }
         expsecond += c;
     }
-    //if its a variable
-    if (identifier == '=') {
-        // Expression *c = new Variable(expfirst, this->varsMap[exp]);
-    }
+    Interpreter *i1 = new Interpreter();
+    Interpreter *i2 = new Interpreter();
+
+    Expression *first = i1->interpret(expfirst);
+    Expression *second = i2->interpret(expsecond);
 
     return 2;
 }

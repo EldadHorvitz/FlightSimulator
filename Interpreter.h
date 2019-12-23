@@ -10,12 +10,13 @@
 #include <array>
 #include "Expression.h"
 #include "map"
+#include "Var.h"
 
 class Interpreter {
  private:
   stack<string> operators;
   queue<string> output;
-  map<string, double> variables;
+  map<string, Var> variables;
  public:
   Interpreter();
   Expression *interpret(string);
