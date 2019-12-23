@@ -6,13 +6,14 @@
 #include <cstring>
 #include <thread>
 #include "ConnectCommand.h"
+#include "Interpreter.h"
 
 ConnectCommand::ConnectCommand() {
 
 }
 
 int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
-    int port = 0;
+    double port = 0;
     string portString = "";
     int flag = 0;
     for (char c:v[index + 1]) {
@@ -23,7 +24,9 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
             portString += c;
         }
     }
-    port = stoi(portString);
+    Interpreter *i1 = new Interpreter();
+    Expression *ex = i1->interpret(portString, varsMap);
+    port = ex->calculate();
 
     std::string str = v[index + 1].substr(1, 9);
     const char *cstr = str.c_str();
