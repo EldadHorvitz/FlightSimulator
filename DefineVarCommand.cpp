@@ -47,7 +47,7 @@ int DefineVarCommand::execute(vector<string> v, int index) {
         c = v[index + 1][i];
     }
     Var* a = new Var(-999,dir,path);
-    varsmap.insert({name,a});
-    simmap.insert({path,a});
+//    varsmap.insert({name,a});
+ //   simmap.insert({path,a});
     return 2;
 }

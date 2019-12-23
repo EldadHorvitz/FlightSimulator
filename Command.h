@@ -12,7 +12,7 @@ using namespace std;
 
 class Command {
 public:
-    int parmeterNum;
+
     virtual int execute(vector<string> v,int index) = 0;
     virtual ~Command() {}
 };
