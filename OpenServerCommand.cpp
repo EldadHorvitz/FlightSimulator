@@ -8,17 +8,17 @@
 #include <cstring>
 #include <mutex>
 #include <arpa/inet.h>
+#include "Interpreter.h"
 
 
 OpenServerCommand::OpenServerCommand() {
 
 }
 
-int OpenServerCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
-
-
-
-    int portNum = stoi(v[index + 1]);
+int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+    Interpreter *i1 = new Interpreter();
+    Expression *ex = i1->interpret(v[index + 1], varsMap);
+    double portNum = ex->calculate();
     thread *t1 = new thread(serverStart, portNum);
     t1->join();
     int result = 0;
@@ -30,7 +30,7 @@ int OpenServerCommand::execute(vector<string> v, int index,map<string, Var *> *v
 }
 
 
-int OpenServerCommand::serverStart(int portNum) {
+int OpenServerCommand::serverStart(double portNum) {
 
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
