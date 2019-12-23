@@ -14,7 +14,7 @@ OpenServerCommand::OpenServerCommand() {
 
 }
 
-int OpenServerCommand::execute(vector<string> v, int index) {
+int OpenServerCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
 
 
 

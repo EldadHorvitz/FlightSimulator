@@ -19,7 +19,7 @@
 
 WhileCommand::WhileCommand() {  }
 
-int WhileCommand::execute(vector<string> v, int index) {
+int WhileCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
     string expfirst = "";
     string expsecond = "";
     char identifier;

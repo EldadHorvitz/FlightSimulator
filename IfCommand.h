@@ -12,7 +12,7 @@ class IfCommand : public Command  {
 public:
     IfCommand();
 
-    int execute(vector<string> v, int index) override;
+    int execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) override;
 
 };
 

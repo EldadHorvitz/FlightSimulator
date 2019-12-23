@@ -7,7 +7,7 @@
 
 SleepCommand::SleepCommand() { }
 
-int SleepCommand::execute(vector<string> v, int index) {
+int SleepCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
 
     return 2;
 }

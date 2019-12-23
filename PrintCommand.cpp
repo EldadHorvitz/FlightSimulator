@@ -9,7 +9,7 @@ PrintCommand::PrintCommand() {
 
 }
 
-int PrintCommand::execute(vector<string> v, int index) {
+int PrintCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
     int i = 0;
     char c = v[index + 1][i];
     string name = "";
