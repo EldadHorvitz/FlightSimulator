@@ -8,7 +8,7 @@
 int Print::execute(vector<string> v, int index) {
     int flag = 0;
     string temp = "";
-    if (v[index + 1][0] == '\c') {
+    if (v[index + 1][0] == '\"') {
         for (char c: v[index + 1]) {
             if (c == '"') {
                 flag = 1;
@@ -21,8 +21,7 @@ int Print::execute(vector<string> v, int index) {
             }
         }
     } else {
-        cout << varsMap[v[index + 1]];<<endl
+        //   cout << varsMap[v[index + 1]];<<endl
     }
-
 
 }
