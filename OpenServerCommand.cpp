@@ -58,10 +58,9 @@ int OpenServerCommand::serverStart(int portNum) {
     }
 
     // accepting a client
-    int add= sizeof(address);
-    int client_socket = accept(socketfd, (struct sockaddr *) &address,
-                               (socklen_t *) &add);
-
+    socklen_t addrlen = sizeof(sockaddr_in);
+    int client_socket = accept(socketfd, (struct sockaddr *)&address,&addrlen);
+    std::cout << "Server is now listening !!!!!!!!!!!" << std::endl;
     if (client_socket == -1) {
         std::cerr << "Error accepting client" << std::endl;
         return -4;

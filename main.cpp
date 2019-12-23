@@ -71,7 +71,12 @@ void parser(vector<string> lexered, map<string, Command *> hashMap) {
             if (c != NULL) {
                 index += c->execute(lexered, index);
             }
-        } else {
+        } else if(hashMap.count(lexered[index])){
+            Command *c = new AssignmentCommand();
+            if (c != NULL) {
+                index += c->execute(lexered, index);
+            }
+        }else{
             ++index;
         }
 
