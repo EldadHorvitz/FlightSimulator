@@ -104,7 +104,6 @@ map<string, Command *> initilize() {
     hash.insert({"Print", c});
     c = new SleepCommand();
     hash.insert({"Sleep", c});
-
     c = new WhileCommand();
     hash.insert({"while", c});
     c = new IfCommand();
