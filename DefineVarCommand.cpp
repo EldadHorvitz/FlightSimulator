@@ -8,6 +8,7 @@
 DefineVarCommand::DefineVarCommand() { this->parmeterNum = 4; }
 
 int DefineVarCommand::execute(vector<string> v, int index) {
+
     cout<<parmeterNum<<endl;
     return this->parmeterNum + 1;
 }

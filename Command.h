@@ -7,14 +7,22 @@
 
 #include <string>
 #include <vector>
+#include "Expression.h"
+#include "UnaryOperator.h"
+#include "map"
 
 using namespace std;
 
 class Command {
 public:
     int parmeterNum;
-    virtual int execute(vector<string> v,int index) = 0;
+
+    virtual int execute(vector<string> v, int index) = 0;
+
     virtual ~Command() {}
+
+protected:
+    map<string, Command *> varsMap;
 };
 
 
