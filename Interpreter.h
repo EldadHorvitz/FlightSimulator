@@ -19,7 +19,7 @@ class Interpreter {
   map<string, Var*> variables;
  public:
   Interpreter();
-  Expression *interpret(string);
+  Expression *interpret(string,map<string, Var *> *varsMap);
   int presedence(char);
   virtual ~Interpreter();
   void setVariables(string);

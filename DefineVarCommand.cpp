@@ -50,4 +50,5 @@ int DefineVarCommand::execute(vector<string> v, int index,map<string, Var *> *va
     varsMap->insert({name,a});
     simMap->insert({path,a});
     return 2;
+
 }

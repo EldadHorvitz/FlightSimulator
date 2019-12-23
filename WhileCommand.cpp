@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 #include "WhileCommand.h"
 #include "Interpreter.h"
 #include "Plus.h"
@@ -19,7 +20,7 @@
 
 WhileCommand::WhileCommand() {}
 
-int WhileCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
+int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     string expfirst = "";
     string expsecond = "";
     char identifier;
@@ -32,7 +33,8 @@ int WhileCommand::execute(vector<string> v, int index,map<string, Var *> *varsMa
         }
         expfirst += c;
     }
-
+    std::string::iterator end_pos = std::remove(expfirst.begin(), expfirst.end(), ' ');
+    expfirst.erase(end_pos, expfirst.end());
 
     for (char c: v[index + 1].substr(counter, v[index + 1].length())) {
         if (c == '{') {
@@ -40,12 +42,19 @@ int WhileCommand::execute(vector<string> v, int index,map<string, Var *> *varsMa
         }
         expsecond += c;
     }
+    end_pos = std::remove(expfirst.begin(), expfirst.end(), ' ');
+    expsecond.erase(end_pos, expfirst.end());
+
+
     Interpreter *i1 = new Interpreter();
     Interpreter *i2 = new Interpreter();
 
-    Expression *first = i1->interpret(expfirst);
+    Expression *first = i1->interpret(expfirst, varsMap);
 
-    Expression *second = i2->interpret(expsecond);
+    Expression *second = i2->interpret(expsecond, varsMap);
+
+    cout << first->calculate() << endl;
+
 
     return 2;
 }

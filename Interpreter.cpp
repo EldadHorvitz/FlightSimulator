@@ -15,7 +15,7 @@
 Interpreter::Interpreter() {
 }
 
-Expression *Interpreter::interpret(string phrase) {
+Expression *Interpreter::interpret(string phrase, map<string, Var *> *varsMap) {
     string number;
     string var;
     int counterNum = 0;
@@ -40,12 +40,16 @@ Expression *Interpreter::interpret(string phrase) {
         else if (isalpha(c)) {
             counterVar = this->varCounter(phrase.substr(stringPos, phrase.length() - 1));
             var.append(phrase.substr(stringPos, counterVar));
-            if (this->variables.count(var)) {
-                double value = this->variables[var]->getVal();
+            if (varsMap->count(var)) {
+                double value = (*varsMap)[var]->getVal();
                 std::ostringstream strs;
                 strs << value;
                 std::string str = strs.str();
                 this->output.push(str);
+                phrase = phrase.substr(counterVar, phrase.size());
+                if (phrase == " ") {
+                    break;
+                }
             } else {
                 throw "illegal math expression";
             }
