@@ -8,7 +8,7 @@
 
 DefineVarCommand::DefineVarCommand() { }
 
-int DefineVarCommand::execute(vector<string> v, int index) {
+int DefineVarCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
     int i = 0;
     char c = v[index + 1][i];
     string name = "";
@@ -47,7 +47,7 @@ int DefineVarCommand::execute(vector<string> v, int index) {
         c = v[index + 1][i];
     }
     Var* a = new Var(-999,dir,path);
-//    varsmap.insert({name,a});
- //   simmap.insert({path,a});
+    varsMap->insert({name,a});
+    simMap->insert({path,a});
     return 2;
 }

@@ -14,7 +14,10 @@ OpenServerCommand::OpenServerCommand() {
 
 }
 
-int OpenServerCommand::execute(vector<string> v, int index) {
+int OpenServerCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
+
+
+
     int portNum = stoi(v[index + 1]);
     thread *t1 = new thread(serverStart, portNum);
     t1->join();

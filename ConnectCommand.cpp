@@ -11,7 +11,7 @@ ConnectCommand::ConnectCommand() {
 
 }
 
-int ConnectCommand::execute(vector<string> v, int index) {
+int ConnectCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
     int port = stoi(v[index + 2]);
     std::string str = v[index + 1];
     const char *cstr = str.c_str();
