@@ -72,12 +72,12 @@ void parser(vector<string> lexered, map<string, Command *> hashMap) {
             if (c != NULL) {
                 index += c->execute(lexered, index);
             }
-        } else if(hashMap.count(lexered[index])){
+        } else if (hashMap.count(lexered[index])) {
             Command *c = new AssignmentCommand();
             if (c != NULL) {
                 index += c->execute(lexered, index);
             }
-        }else{
+        } else {
             ++index;
         }
 
@@ -95,15 +95,15 @@ map<string, Command *> initilize() {
     hash.insert({"connectControlClient", c});
     c = new PrintCommand();
     hash.insert({"Print", c});
+     */
     c = new SleepCommand();
     hash.insert({"Sleep", c});
-     */
-    c = new WhileCommand();
-    hash.insert({"while", c});
     /*
-    c = new IfCommand();
-    hash.insert({"if", c});
-     */
+   c = new WhileCommand();
+   hash.insert({"while", c});
+   c = new IfCommand();
+   hash.insert({"if", c});
+    */
     return hash;
 }
 

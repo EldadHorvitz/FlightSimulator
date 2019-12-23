@@ -3,11 +3,13 @@
 //
 
 #include <iostream>
+#include <thread>
 #include "SleepCommand.h"
 
-SleepCommand::SleepCommand() { }
+SleepCommand::SleepCommand() {}
 
 int SleepCommand::execute(vector<string> v, int index) {
-
+    int secondstosleep = stoi(v[index + 1]);
+    std::this_thread::sleep_for(std::chrono::milliseconds(secondstosleep));
     return 2;
 }
