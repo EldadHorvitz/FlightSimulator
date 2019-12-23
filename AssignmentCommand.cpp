@@ -5,10 +5,10 @@
 #include <iostream>
 #include "AssignmentCommand.h"
 
-AssignmentCommand::AssignmentCommand() { this->parmeterNum = 2; }
+AssignmentCommand::AssignmentCommand() {  }
 
 int AssignmentCommand::execute(vector<string> v, int index) {
-    cout << parmeterNum << endl;
 
-    return this->parmeterNum;
+
+    return 2;
 }

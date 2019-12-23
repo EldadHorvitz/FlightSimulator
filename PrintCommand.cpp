@@ -6,10 +6,37 @@
 #include "PrintCommand.h"
 
 PrintCommand::PrintCommand() {
-    this->parmeterNum = 1;
+
 }
 
 int PrintCommand::execute(vector<string> v, int index) {
-    cout << parmeterNum << endl;
-    return this->parmeterNum;
+    int i = 0;
+    char c = v[index + 1][i];
+    string name = "";
+    double val;
+    while (c!=')') {
+        while (c != '"' && c != ')') {
+            name += c;
+            i++;
+            c = v[index + 1][i];
+        }
+//        if (varsmap.count(name)) {
+//            cout << varsmap[name].getVal();
+//        }
+        name = "";
+        if (c == '"') {
+            i++;
+            c = v[index + 1][i];
+            while (c != '"' && c != ')') {
+                name += c;
+                i++;
+                c = v[index + 1][i];
+            }
+            if (c!=')'){
+                cout << name<<endl;
+            }
+
+        }
+    }
+    return 2;
 }

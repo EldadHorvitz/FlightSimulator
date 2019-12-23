@@ -45,5 +45,5 @@ int WhileCommand::execute(vector<string> v, int index) {
         // Expression *c = new Variable(expfirst, this->varsMap[exp]);
     }
 
-    return this->parmeterNum;
+    return 2;
 }

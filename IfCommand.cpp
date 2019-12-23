@@ -5,9 +5,8 @@
 #include <iostream>
 #include "IfCommand.h"
 
-IfCommand::IfCommand() { this->parmeterNum = 2; }
+IfCommand::IfCommand() {  }
 
 int IfCommand::execute(vector<string> v, int index) {
-    cout << parmeterNum << endl;
-    return this->parmeterNum;
+    return 2;
 }
