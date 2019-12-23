@@ -41,7 +41,7 @@ Expression *Interpreter::interpret(string phrase) {
             counterVar = this->varCounter(phrase.substr(stringPos, phrase.length() - 1));
             var.append(phrase.substr(stringPos, counterVar));
             if (this->variables.count(var)) {
-                double value = this->variables[var].getVal();
+                double value = this->variables[var]->getVal();
                 std::ostringstream strs;
                 strs << value;
                 std::string str = strs.str();
@@ -127,7 +127,7 @@ Expression *Interpreter::interpret(string phrase) {
         if (isalpha(this->output.front().at(0))) {
             string temp = this->output.front();
             this->output.pop();
-            experession.push(new Value(this->variables[temp].getVal()));
+            experession.push(new Value(this->variables[temp]->getVal()));
         }
         switch (this->output.front().at(0)) {
             case '*':
@@ -318,15 +318,15 @@ void Interpreter::setVariables(string assignment) {
       this->variables.insert(std::pair<string, double>(temp, value));
     }
   }
-
+*/
 }
 
 bool Interpreter::isOperator(string op1, char op2) {
-  if (op1 == "+" || op1 == "*" || op1 == "/" || op1 == "-") {
-    if (op2 == '+' || op2 == '*' || op2 == '/' || op2 == '-') {
-      return true;
+    if (op1 == "+" || op1 == "*" || op1 == "/" || op1 == "-") {
+        if (op2 == '+' || op2 == '*' || op2 == '/' || op2 == '-') {
+            return true;
+        }
     }
-  }
-  return false;
-  */
+    return false;
+
 }

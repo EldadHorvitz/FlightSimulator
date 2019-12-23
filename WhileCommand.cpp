@@ -44,6 +44,7 @@ int WhileCommand::execute(vector<string> v, int index) {
     Interpreter *i2 = new Interpreter();
 
     Expression *first = i1->interpret(expfirst);
+
     Expression *second = i2->interpret(expsecond);
 
     return 2;

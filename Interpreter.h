@@ -16,7 +16,7 @@ class Interpreter {
  private:
   stack<string> operators;
   queue<string> output;
-  map<string, Var> variables;
+  map<string, Var*> variables;
  public:
   Interpreter();
   Expression *interpret(string);
