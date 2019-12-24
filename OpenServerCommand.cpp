@@ -17,7 +17,9 @@ OpenServerCommand::OpenServerCommand() {
 
 int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     Interpreter *i1 = new Interpreter();
-    Expression *ex = i1->interpret(v[index + 1], varsMap);
+    string port = v[index + 1];
+    port = port.substr(0, port.length() - 1);
+    Expression *ex = i1->interpret(port, varsMap);
     double portNum = ex->calculate();
     thread *t1 = new thread(serverStart, portNum);
     t1->join();

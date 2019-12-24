@@ -95,7 +95,7 @@ map<string, Command *> initilize() {
     map<string, Command *> hash;
     Command *c = new DefineVarCommand();
     hash.insert({"var", c});
-    /*
+
     c = new OpenServerCommand();
     hash.insert({"openDataServer", c});
     c = new ConnectCommand();
@@ -104,11 +104,12 @@ map<string, Command *> initilize() {
     hash.insert({"Print", c});
     c = new SleepCommand();
     hash.insert({"Sleep", c});
+    /*
     c = new WhileCommand();
     hash.insert({"while", c});
     c = new IfCommand();
     hash.insert({"if", c});
-*/
+ */
     return hash;
 }
 
