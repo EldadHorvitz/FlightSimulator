@@ -11,6 +11,8 @@
 #include "Minus.h"
 #include "UMinus.h"
 #include <sstream>
+#include <algorithm>
+#include <regex>
 
 Interpreter::Interpreter() {
 
@@ -131,6 +133,8 @@ string Interpreter::updateOp(string exp, int index) {
 }
 
 Expression *Interpreter::interpret(string exp,map<string, Var *> *varsMap) {
+    std::regex r("\\s+");
+    exp = std::regex_replace(exp, r, "");
     for (unsigned int i = 0; i < exp.length(); i++) {
         char c = exp[i];
         if (isdigit(c)) {

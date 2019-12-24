@@ -28,7 +28,7 @@ public:
 
     int execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) override;
 
-    static int serverStart(int portNum);
+    static int serverStart(double portNum);
 };
 
 

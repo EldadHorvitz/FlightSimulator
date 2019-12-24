@@ -6,18 +6,32 @@
 #include <cstring>
 #include <thread>
 #include "ConnectCommand.h"
+#include "Interpreter.h"
 
 ConnectCommand::ConnectCommand() {
 
 }
 
-int ConnectCommand::execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) {
-    int port = stoi(v[index + 2]);
-    std::string str = v[index + 1];
-    const char *cstr = str.c_str();
-      thread *t1 = new thread(clientStart, port, cstr);
-     t1->join();
+int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+    double port = 0;
+    string portString = "";
+    int flag = 0;
+    for (char c:v[index + 1]) {
+        if (c == ',') {
+            flag = 1;
+            continue;
+        } else if (flag == 1 && c != ')') {
+            portString += c;
+        }
+    }
+    Interpreter *i1 = new Interpreter();
+    Expression *ex = i1->interpret(portString, varsMap);
+    port = ex->calculate();
 
+    std::string str = v[index + 1].substr(1, 9);
+    const char *cstr = str.c_str();
+    thread *t1 = new thread(clientStart, port, cstr);
+    t1->join();
     return 2;
 }
 
