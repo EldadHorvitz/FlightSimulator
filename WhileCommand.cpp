@@ -31,7 +31,9 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
     while (v[num + index] != "}") {
         num++;
     }
+    int jump=num;
     num=num+index;
+    int x=2;
     string expfirst = "";
     string expsecond = "";
     string identifier = "";
@@ -71,132 +73,139 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
     map<string, Command *> hashMap = initilize();
     if (identifier == "==") {
         while (first->calculate() == second->calculate()) {
-            index = 2+index;
-            while (index < num) {
-                if (hashMap.count(v[index])) {
-                    Command *c = hashMap[v[index]];
+            x = 2+index;
+            while (x < num) {
+                if (hashMap.count(v[x])) {
+                    Command *c = hashMap[v[x]];
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
-                } else if (varsMap->count(v[index])) {
+                } else if (varsMap->count(v[x])) {
                     Command *c = new AssignmentCommand();
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
                     ++index;
                 }
             }
+            first = i1->interpret(expfirst, varsMap);
+            second = i2->interpret(expsecond, varsMap);
         }
 
     } else if (identifier == "!=") {
         while (first->calculate() != second->calculate()) {
-            index = 2+index;
-            while (index < num) {
-                if (hashMap.count(v[index])) {
-                    Command *c = hashMap[v[index]];
+            x = 2+index;
+            while (x < num) {
+                if (hashMap.count(v[x])) {
+                    Command *c = hashMap[v[x]];
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
-                } else if (varsMap->count(v[index])) {
+                } else if (varsMap->count(v[x])) {
                     Command *c = new AssignmentCommand();
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
                     ++index;
                 }
             }
-
+            first = i1->interpret(expfirst, varsMap);
+            second = i2->interpret(expsecond, varsMap);
         }
 
     } else if (identifier == "<=") {
         while (first->calculate() <= second->calculate()) {
-            index = 2+index;
-            while (index < num) {
-                if (hashMap.count(v[index])) {
-                    Command *c = hashMap[v[index]];
+            x = 2+index;
+            while (x < num) {
+                if (hashMap.count(v[x])) {
+                    Command *c = hashMap[v[x]];
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
-                } else if (varsMap->count(v[index])) {
+                } else if (varsMap->count(v[x])) {
                     Command *c = new AssignmentCommand();
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
                     ++index;
                 }
             }
-
+            first = i1->interpret(expfirst, varsMap);
+            second = i2->interpret(expsecond, varsMap);
         }
 
     } else if (identifier == ">=") {
         while (first->calculate() >= second->calculate()) {
-            index = 2+index;
-            while (index < num) {
-                if (hashMap.count(v[index])) {
-                    Command *c = hashMap[v[index]];
+            x = 2+index;
+            while (x < num) {
+                if (hashMap.count(v[x])) {
+                    Command *c = hashMap[v[x]];
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
-                } else if (varsMap->count(v[index])) {
+                } else if (varsMap->count(v[x])) {
                     Command *c = new AssignmentCommand();
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
                     ++index;
                 }
             }
-
+            first = i1->interpret(expfirst, varsMap);
+            second = i2->interpret(expsecond, varsMap);
         }
 
     } else if (identifier == ">") {
         while (first->calculate() > second->calculate()) {
-            index = 2+index;
-            while (index < num) {
-                if (hashMap.count(v[index])) {
-                    Command *c = hashMap[v[index]];
+            x = 2+index;
+            while (x < num) {
+                if (hashMap.count(v[x])) {
+                    Command *c = hashMap[v[x]];
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
-                } else if (varsMap->count(v[index])) {
+                } else if (varsMap->count(v[x])) {
                     Command *c = new AssignmentCommand();
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
                     ++index;
                 }
             }
-
+            first = i1->interpret(expfirst, varsMap);
+            second = i2->interpret(expsecond, varsMap);
         }
 
     } else if (identifier == "<") {
         while (first->calculate() < second->calculate()) {
-            index = 2+index;
-            while (index < num) {
-                if (hashMap.count(v[index])) {
-                    Command *c = hashMap[v[index]];
+            x = 2+index;
+            while (x < num) {
+                if (hashMap.count(v[x])) {
+                    Command *c = hashMap[v[x]];
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
-                } else if (varsMap->count(v[index])) {
+                } else if (varsMap->count(v[x])) {
                     Command *c = new AssignmentCommand();
                     if (c != NULL) {
-                        index += c->execute(v, index, varsMap, simMap);
+                        x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
                     ++index;
                 }
             }
-
+            first = i1->interpret(expfirst, varsMap);
+            second = i2->interpret(expsecond, varsMap);
         }
 
     }
 
-    return num;
+    return jump;
 }
 
 map<string, Command *> WhileCommand::initilize() {
