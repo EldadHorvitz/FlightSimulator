@@ -120,8 +120,70 @@ void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     a = new Var(999, -1, "/instrumentation/vertical-speed-indicator/indicated-speed-fpm");
     varsMap->insert({"vertical", a});
     simMap->insert({"/instrumentation/vertical-speed-indicator/indicated-speed-fpm", a});
-    //21
-
+    //21 IS IN FLY.TXT
+    a = new Var(999, -1, "/controls/flight/aileron");
+    varsMap->insert({"aileron", a});
+    simMap->insert({"/controls/flight/aileron", a});
+    //22
+    a = new Var(999, -1, "/controls/flight/elevator");
+    varsMap->insert({"elevator", a});
+    simMap->insert({"/controls/flight/elevator", a});
+    //23 IS IN MAP
+    a = new Var(999, -1, "/controls/flight/rudder");
+    varsMap->insert({"rudder", a});
+    simMap->insert({"/controls/flight/rudder", a});
+    //24
+    a = new Var(999, -1, "/controls/flight/flaps");
+    varsMap->insert({"flight_flaps", a});
+    simMap->insert({"/controls/flight/flaps", a});
+    //25
+    a = new Var(999, -1, "/controls/engines/engine/throttle");
+    varsMap->insert({"engine_throttle", a});
+    simMap->insert({"/controls/engines/engine/throttle", a});
+    //26 is in map
+    a = new Var(999, -1, "/controls/engines/current-engine/throttle");
+    varsMap->insert({"throttle", a});
+    simMap->insert({"/controls/engines/current-engine/throttle", a});
+    //27 is in map
+    a = new Var(999, -1, "/controls/switches/master-avionics");
+    varsMap->insert({"masteravionics", a});
+    simMap->insert({"/controls/switches/master-avionics", a});
+    //28 is in map
+    a = new Var(999, -1, "/controls/switches/starter");
+    varsMap->insert({"starter", a});
+    simMap->insert({"/controls/switches/starter", a});
+    //29 is in map
+    a = new Var(999, -1, "/engines/active-engine/auto-start");
+    varsMap->insert({"autostart", a});
+    simMap->insert({"/engines/active-engine/auto-start", a});
+    //30 is in map
+    a = new Var(999, -1, "/controls/flight/speedbrake");
+    varsMap->insert({"breaks", a});
+    simMap->insert({"/controls/flight/speedbrake", a});
+    //31 is in map
+    a = new Var(999, -1, "/sim/model/c172p/brake-parking");
+    varsMap->insert({"brakeparking", a});
+    simMap->insert({"/sim/model/c172p/brake-parking", a});
+    //32 is in map
+    a = new Var(999, -1, "/controls/engines/engine/primer");
+    varsMap->insert({"primer", a});
+    simMap->insert({"/controls/engines/engine/primer", a});
+    //33  is in map
+    a = new Var(999, -1, "/controls/engines/current-engine/mixture");
+    varsMap->insert({"mixture", a});
+    simMap->insert({"/controls/engines/current-engine/mixture", a});
+    //34 is in map
+    a = new Var(999, -1, "/controls/switches/master-bat");
+    varsMap->insert({"masterbat", a});
+    simMap->insert({"/controls/switches/master-bat", a});
+    //35 is in map
+    a = new Var(999, -1, "/controls/switches/master-alt");
+    varsMap->insert({"masterlat", a});
+    simMap->insert({"/controls/switches/master-alt", a});
+    //36 is in map
+    a = new Var(999, -1, "/engines/engine/rpm");
+    varsMap->insert({"rpm", a});
+    simMap->insert({"/engines/engine/rpm", a});
 
 
 }
