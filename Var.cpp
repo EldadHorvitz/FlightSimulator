@@ -10,6 +10,7 @@ Var::~Var() {
 
 }
 
+
 void Var::setVal(double val) {
     Var::val = val;
 }
