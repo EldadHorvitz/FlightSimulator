@@ -18,7 +18,8 @@ using namespace std;
 
 vector<string> lexer(char *string);
 
-void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap, map<string, Var *> *simMap);
+void
+parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap, map<string, Var *> *simMap);
 
 map<string, Command *> initilize();
 
@@ -29,9 +30,9 @@ int main(int argc, char *argv[]) {
     }
     vector<string> v = lexer(argv[1]);
     map<string, Command *> commandsMap = initilize();
-    map<string, Var *> *varsMap=new map<string, Var *> ();
-    map<string, Var *> *simMap=new map<string, Var *>();
-    parser(v, commandsMap,varsMap,simMap);
+    map<string, Var *> *varsMap = new map<string, Var *>();
+    map<string, Var *> *simMap = new map<string, Var *>();
+    parser(v, commandsMap, varsMap, simMap);
     return 0;
 }
 
@@ -64,25 +65,21 @@ vector<string> lexer(char *filename) {
 }
 
 
-void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap,
+            map<string, Var *> *simMap) {
     int index = 0;
     while (index < lexered.size()) {
         if (hashMap.count(lexered[index])) {
             Command *c = hashMap[lexered[index]];
             if (c != NULL) {
-                try{
-                    index += c->execute(lexered, index,varsMap,simMap);
-                }
-                catch (const char * e){
-                    cout<< e;
-                }
+                index += c->execute(lexered, index, varsMap, simMap);
             }
-        } else if(varsMap->count(lexered[index])){
+        } else if (varsMap->count(lexered[index])) {
             Command *c = new AssignmentCommand();
             if (c != NULL) {
-                index += c->execute(lexered, index,varsMap,simMap);
+                index += c->execute(lexered, index, varsMap, simMap);
             }
-        }else{
+        } else {
             ++index;
         }
 
@@ -94,7 +91,6 @@ map<string, Command *> initilize() {
     Command *c = new DefineVarCommand();
     hash.insert({"var", c});
     c = new OpenServerCommand();
-    /*
     hash.insert({"openDataServer", c});
     c = new ConnectCommand();
     hash.insert({"connectControlClient", c});
@@ -102,7 +98,6 @@ map<string, Command *> initilize() {
     hash.insert({"Print", c});
     c = new SleepCommand();
     hash.insert({"Sleep", c});
-     */
     c = new WhileCommand();
     hash.insert({"while", c});
     c = new IfCommand();
