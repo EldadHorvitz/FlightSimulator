@@ -58,7 +58,6 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
     Expression *first = i1->interpret(expfirst, varsMap);
 
     Expression *second = i2->interpret(expsecond, varsMap);
-    cout << first->calculate() << identifier << second->calculate() << endl;
     map<string, Command *> hashMap = initilize();
     if (identifier == "==") {
         if (first->calculate() == second->calculate()) {
@@ -78,8 +77,7 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
                     ++index;
                 }
             }
-            first = i1->interpret(expfirst, varsMap);
-            second = i2->interpret(expsecond, varsMap);
+
         }
 
     } else if (identifier == "!=") {
@@ -100,8 +98,7 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
                     ++index;
                 }
             }
-            first = i1->interpret(expfirst, varsMap);
-            second = i2->interpret(expsecond, varsMap);
+
         }
 
     } else if (identifier == "<=") {
@@ -122,8 +119,7 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
                     ++index;
                 }
             }
-            first = i1->interpret(expfirst, varsMap);
-            second = i2->interpret(expsecond, varsMap);
+
         }
 
     } else if (identifier == ">=") {
@@ -144,8 +140,7 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
                     ++index;
                 }
             }
-            first = i1->interpret(expfirst, varsMap);
-            second = i2->interpret(expsecond, varsMap);
+
         }
 
     } else if (identifier == ">") {
@@ -188,8 +183,7 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
                     ++index;
                 }
             }
-            first = i1->interpret(expfirst, varsMap);
-            second = i2->interpret(expsecond, varsMap);
+
         }
 
     }
@@ -197,7 +191,7 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
     return jump;
 }
 
-map<string, Command *> WhileCommand::initilize() {
+map<string, Command *> IfCommand::initilize() {
     map<string, Command *> hash;
     Command *c = new DefineVarCommand();
     hash.insert({"var", c});

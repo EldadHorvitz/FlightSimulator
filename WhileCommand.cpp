@@ -69,7 +69,6 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
     Expression *first = i1->interpret(expfirst, varsMap);
 
     Expression *second = i2->interpret(expsecond, varsMap);
-    cout << first->calculate() << identifier << second->calculate() << endl;
     map<string, Command *> hashMap = initilize();
     if (identifier == "==") {
         while (first->calculate() == second->calculate()) {

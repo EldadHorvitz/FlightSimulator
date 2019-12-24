@@ -1,7 +1,12 @@
 var alt <- sim("/instrumentation/altimeter/indicated-altitude-ft")
 var rpm <- sim("/engines/engine/rpm")
-while rpm <= 750 {
+if rpm < 750 {
 Print(rpm)
+Print("I am the king!")
+}
+while rpm >= 750 {
+Print(rpm)
+Print("I am the king!")
 }
 var warp -> sim("/sim/time/warp")
 var magnetos -> sim("/controls/switches/magnetos")
