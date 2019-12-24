@@ -63,8 +63,6 @@ int OpenServerCommand::serverStart(double portNum) {
     int addrlen = sizeof(address);
     int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
 
-    cerr << "testing" << endl;
-
     if (client_socket == -1) {
         cerr << "Error accepting" << endl;
         return -1;
