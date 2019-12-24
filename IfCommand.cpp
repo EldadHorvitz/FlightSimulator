@@ -63,6 +63,8 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
         if (first->calculate() == second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -84,6 +86,8 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
         if (first->calculate() != second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -105,6 +109,8 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
         if (first->calculate() <= second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -126,6 +132,8 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
         if (first->calculate() >= second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -147,6 +155,8 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
         if (first->calculate() > second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -161,14 +171,15 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
                     ++index;
                 }
             }
-            first = i1->interpret(expfirst, varsMap);
-            second = i2->interpret(expsecond, varsMap);
+
         }
 
     } else if (identifier == "<") {
         if (first->calculate() < second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -209,4 +220,15 @@ map<string, Command *> IfCommand::initilize() {
     hash.insert({"if", c});
 
     return hash;
+}
+string IfCommand::RemoveChar(string str, char c)
+{
+    string result;
+    for (size_t i = 0; i < str.size(); i++)
+    {
+        char currentChar = str[i];
+        if (currentChar != c)
+            result += currentChar;
+    }
+    return result;
 }

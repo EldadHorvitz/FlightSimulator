@@ -24,6 +24,7 @@
 #include "PrintCommand.h"
 #include "IfCommand.h"
 
+
 WhileCommand::WhileCommand() {}
 
 int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
@@ -74,6 +75,8 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
         while (first->calculate() == second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -96,6 +99,8 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
         while (first->calculate() != second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -118,6 +123,8 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
         while (first->calculate() <= second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -140,6 +147,8 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
         while (first->calculate() >= second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -162,6 +171,8 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
         while (first->calculate() > second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -184,6 +195,8 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
         while (first->calculate() < second->calculate()) {
             x = 2+index;
             while (x < num) {
+                v[x]=RemoveChar(v[x],'\t');
+                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -225,4 +238,15 @@ map<string, Command *> WhileCommand::initilize() {
     hash.insert({"if", c});
 
     return hash;
+}
+string WhileCommand::RemoveChar(string str, char c)
+{
+    string result;
+    for (size_t i = 0; i < str.size(); i++)
+    {
+        char currentChar = str[i];
+        if (currentChar != c)
+            result += currentChar;
+    }
+    return result;
 }

@@ -1,6 +1,14 @@
 var alt <- sim("/instrumentation/altimeter/indicated-altitude-ft")
 var rpm <- sim("/engines/engine/rpm")
+if rpm <= 750 {
+	Print(rpm)
+	Print("check1")
+}
 if rpm < 750 {
+	Print(rpm)
+	Print("check2")
+}
+if rpm == -999 {
 Print(rpm)
 Print("I am the king!")
 }
