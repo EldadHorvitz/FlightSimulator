@@ -117,6 +117,12 @@ void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     varsMap->insert({"turn", a});
     simMap->insert({"/instrumentation/turn-indicator/indicated-turn-rate", a});
     //20
+    a = new Var(999, -1, "/instrumentation/vertical-speed-indicator/indicated-speed-fpm");
+    varsMap->insert({"vertical", a});
+    simMap->insert({"/instrumentation/vertical-speed-indicator/indicated-speed-fpm", a});
+    //21
+
+
 
 }
 
