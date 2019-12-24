@@ -9,7 +9,8 @@
 #include <mutex>
 #include <arpa/inet.h>
 #include "Interpreter.h"
-
+#include <string>
+#include <iostream>
 
 OpenServerCommand::OpenServerCommand() {
 
@@ -21,8 +22,7 @@ int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *
     port = port.substr(0, port.length() - 1);
     Expression *ex = i1->interpret(port, varsMap);
     double portNum = ex->calculate();
-    thread *t1 = new thread(serverStart, portNum);
-    t1->join();
+    serverStart(portNum, varsMap, simMap);
     int result = 0;
     if (result == 0) {
         return 2;
@@ -32,7 +32,7 @@ int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *
 }
 
 
-int OpenServerCommand::serverStart(double portNum) {
+int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
 
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
@@ -61,22 +61,46 @@ int OpenServerCommand::serverStart(double portNum) {
     }
     // accepting a client
     int addrlen = sizeof(address);
-    int client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
+    client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
 
     if (client_socket == -1) {
         cerr << "Error accepting" << endl;
         return -1;
     }
     close(socketfd);
-    //reading from client
-    char buffer[1024] = {0};
-    int valread = read(client_socket, buffer, 1024);
-    std::cout << buffer << std::endl;
 
+    isConnect = true;
+    thread *t1 = new thread(readFromClient, varsMap, simMap);
     return 1;
 }
 
 
+void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+    while (isConnect) {
+        //reading from client
+        char buffer[1024] = {0};
+        read(client_socket, buffer, 1024);
+        //  int valread = read(client_socket, buffer, 1024);
+        std::cout << buffer << std::endl;
+        readFromBuffer(buffer, varsMap, simMap);
+    }
+
+}
+
+void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+    m1.lock();
+    std::string delimiter = ",";
+    size_t pos = 0;
+    std::string token;
+    int i = 0;
+    while ((pos = buffer.find(delimiter)) != std::string::npos) {
+        token = buffer.substr(0, pos);
+        cout << token << endl;
+        buffer.erase(0, pos + delimiter.length());
+        i++;
+    }
+    m1.unlock();
+}
 
 /*
 

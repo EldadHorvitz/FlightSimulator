@@ -36,6 +36,7 @@ int main(int argc, char *argv[]) {
     map<string, Var *> *simMap = new map<string, Var *>();
     xmlInit(varsMap, simMap);
     parser(v, commandsMap, varsMap, simMap);
+
     return 0;
 }
 
@@ -240,8 +241,8 @@ void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, 
         } else {
             ++index;
         }
-
     }
+    isConnect = false;
 }
 
 map<string, Command *> initilize() {
