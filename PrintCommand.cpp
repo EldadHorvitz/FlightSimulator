@@ -20,9 +20,10 @@ int PrintCommand::execute(vector<string> v, int index,map<string, Var *> *varsMa
             i++;
             c = v[index + 1][i];
         }
-//        if (varsmap.count(name)) {
-//            cout << varsmap[name].getVal();
-//        }
+       if (varsMap->count(name)) {
+           double x=(*varsMap)[name]->getVal();
+           cout << x<<endl;
+       }
         name = "";
         if (c == '"') {
             i++;

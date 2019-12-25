@@ -226,12 +226,7 @@ void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, 
         if (hashMap.count(lexered[index])) {
             Command *c = hashMap[lexered[index]];
             if (c != NULL) {
-                try {
-                    index += c->execute(lexered, index, varsMap, simMap);
-                }
-                catch (const char *e) {
-                    cout << e;
-                }
+                index += c->execute(lexered, index, varsMap, simMap);
             }
         } else if (varsMap->count(lexered[index])) {
             Command *c = new AssignmentCommand();
@@ -249,7 +244,6 @@ map<string, Command *> initilize() {
     map<string, Command *> hash;
     Command *c = new DefineVarCommand();
     hash.insert({"var", c});
-
     c = new OpenServerCommand();
     hash.insert({"openDataServer", c});
     c = new ConnectCommand();
@@ -258,12 +252,11 @@ map<string, Command *> initilize() {
     hash.insert({"Print", c});
     c = new SleepCommand();
     hash.insert({"Sleep", c});
-    /*
     c = new WhileCommand();
     hash.insert({"while", c});
     c = new IfCommand();
     hash.insert({"if", c});
- */
+
     return hash;
 }
 

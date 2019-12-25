@@ -18,3 +18,11 @@ void Var::setVal(double val) {
 double Var::getVal() {
     return this->val;
 }
+
+int Var::getDir() const {
+    return dir;
+}
+
+const string &Var::getPath() const {
+    return path;
+}

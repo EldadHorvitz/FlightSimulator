@@ -36,7 +36,7 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 }
 
 
-int ConnectCommand::clientStart(int port, const char *ip) {
+int ConnectCommand::clientStart(int port, const char *ip,Var * var) {
 
     //create socket
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -64,7 +64,7 @@ int ConnectCommand::clientStart(int port, const char *ip) {
     }
 
     //if here we made a connection
-    char hello[] = "Hi from Client";
+    char hello[] = var->getPath()+ " "+ var->getVal().stoi();
     int is_sent = send(client_socket, hello, strlen(hello), 0);
     if (is_sent == -1) {
         std::cout << "Error sending message" << std::endl;
