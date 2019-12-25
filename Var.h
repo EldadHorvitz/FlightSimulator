@@ -24,6 +24,10 @@ public:
 
     double getVal();
 
+    int getDir() const;
+
+    const string &getPath() const;
+
 
 };
 

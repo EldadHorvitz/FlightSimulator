@@ -13,7 +13,13 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     var = var.substr(1, var.length());
     Interpreter *i1 = new Interpreter();
     Expression *ex = i1->interpret(var, varsMap);
-    (*varsMap)[v[index]]->setVal(ex->calculate());
+    Var * s=(*varsMap)[v[index]];
+    s->setVal(ex->calculate());
+    if (s->getDir()==1){
+
+    //send s to the simulator through the static func
+
+    }
 
     return 2;
 }
