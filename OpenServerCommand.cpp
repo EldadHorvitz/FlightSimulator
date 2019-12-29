@@ -101,6 +101,24 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
         i++;
     }
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
+    (*varsMap)["warp"]->setVal(stod(token[1]));
+    (*varsMap)["magnetos"]->setVal(stod(token[2]));
+    (*varsMap)["heading"]->setVal(stod(token[3]));
+    (*varsMap)["alt"]->setVal(stod(token[4]));
+    (*varsMap)["altimeter"]->setVal(stod(token[5]));
+    (*varsMap)["attitude"]->setVal(stod(token[6]));
+    (*varsMap)["roll"]->setVal(stod(token[7]));
+    (*varsMap)["pitch"]->setVal(stod(token[8]));
+    (*varsMap)["attitude2"]->setVal(stod(token[9]));
+    (*varsMap)["attitude3"]->setVal(stod(token[10]));
+    (*varsMap)["pressure"]->setVal(stod(token[11]));
+    (*varsMap)["gps"]->setVal(stod(token[12]));
+    (*varsMap)["gps2"]->setVal(stod(token[13]));
+    (*varsMap)["gps3"]->setVal(stod(token[14]));
+    (*varsMap)["indicated"]->setVal(stod(token[15]));
+    (*varsMap)["magnetic"]->setVal(stod(token[16]));
+    (*varsMap)["slip"]->setVal(stod(token[17]));
+
 
     m1.unlock();
 
