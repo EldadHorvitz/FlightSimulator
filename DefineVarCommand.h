@@ -7,6 +7,7 @@
 
 
 #include "Command.h"
+#include "AssignmentCommand.h"
 
 class DefineVarCommand : public Command {
 public:

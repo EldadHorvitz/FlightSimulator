@@ -23,6 +23,7 @@ int PrintCommand::execute(vector<string> v, int index,map<string, Var *> *varsMa
        if (varsMap->count(name)) {
            double x=(*varsMap)[name]->getVal();
            cout << x<<endl;
+           return 2;
        }
         name = "";
         if (c == '"') {
@@ -35,6 +36,7 @@ int PrintCommand::execute(vector<string> v, int index,map<string, Var *> *varsMa
             }
             if (c!=')'){
                 cout << name<<endl;
+                return 2;
             }
 
         }
