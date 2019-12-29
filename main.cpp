@@ -35,8 +35,13 @@ int main(int argc, char *argv[]) {
     map<string, Var *> *varsMap = new map<string, Var *>();
     map<string, Var *> *simMap = new map<string, Var *>();
     xmlInit(varsMap, simMap);
-    parser(v, commandsMap, varsMap, simMap);
-    close(client_socket_client);
+    try {
+        parser(v, commandsMap, varsMap, simMap);;
+    } catch (const char* e) {
+        cout<<e<<endl;
+    }
+
+    close((*varsMap)["client_sock"]->getDir());
     return 0;
 }
 

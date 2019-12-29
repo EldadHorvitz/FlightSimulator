@@ -60,6 +60,9 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         if (simMap->count(path)) {
             if (varsMap->count(name)) {
                  (*varsMap)[name]->setDir(dir);
+                 if (path!=(*varsMap)[name]->getPath()){
+                     simMap->insert({path, (*varsMap)[name]});
+                 }
 
             } else {
                 (*simMap)[path]->setDir(dir);
