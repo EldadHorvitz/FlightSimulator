@@ -23,6 +23,10 @@ int Var::getDir() const {
     return dir;
 }
 
+void Var::setDir(int dir) {
+    Var::dir = dir;
+}
+
 const string &Var::getPath() const {
     return path;
 }

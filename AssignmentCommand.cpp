@@ -21,7 +21,7 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     Var * s=(*varsMap)[v[index]];
     s->setVal(ex->calculate());
     if (s->getDir()==1){
-        string message="set "+s->getPath()+" "+to_string(s->getVal())+"\r\n";
+        string message="set "+s->getPath()+" "+to_string(s->getVal())+ "\r\n";
         ssize_t returl_val = write(client_socket_client, message.c_str(), message.length());
         /*
         char p[message.length()];
