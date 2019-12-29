@@ -28,6 +28,8 @@ public:
 
     const string &getPath() const;
 
+    void setDir(int dir);
+
 
 };
 
