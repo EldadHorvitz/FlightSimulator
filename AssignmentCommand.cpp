@@ -15,14 +15,18 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     var = var.substr(1, var.length());
     Interpreter *i1 = new Interpreter();
     Expression *ex = i1->interpret(var, varsMap);
-    Var *s = (*varsMap)[v[index]];
+    if (!varsMap->count(v[index])){
+        varsMap->insert({v[index], new Var(-999,-1,"")});
+    }
+    Var * s=(*varsMap)[v[index]];
     s->setVal(ex->calculate());
-    if (s->getDir() == 1) {
-        string massage = "";
-        massage += s->getPath() + "" + to_string(s->getVal());
-        char p[massage.length()];
+    if (s->getDir()==1){
+        string message="set "+s->getPath()+" "+to_string(s->getVal())+"\r\n";
+        ssize_t returl_val = write(client_socket_client, message.c_str(), message.length());
+        /*
+        char p[message.length()];
         for (int i = 0; i < sizeof(p); i++) {
-            p[i] = massage[i];
+            p[i] = message[i];
         }
         int is_sent = send(client_socket_client, p, strlen(p), 0);
         if (is_sent == -1) {
@@ -30,6 +34,7 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
         } else {
             std::cout << "Hello message sent to Server" << std::endl;
         }
+*/
 
 
     }
