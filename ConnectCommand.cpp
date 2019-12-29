@@ -62,7 +62,8 @@ int ConnectCommand::clientStart(int port, const char *ip) {
     } else {
         std::cout << "Client is now connected to Server" << std::endl;
     }
-
+    double x=client_socket;
+    Var *a =new Var(x,2,"");
     //if here we made a connection
     char hello[] = "hi";
     int is_sent = send(client_socket, hello, strlen(hello), 0);

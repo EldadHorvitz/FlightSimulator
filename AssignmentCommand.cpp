@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <cstring>
+#include <sys/socket.h>
 #include "AssignmentCommand.h"
 #include "Interpreter.h"
 
@@ -16,8 +18,21 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     Var * s=(*varsMap)[v[index]];
     s->setVal(ex->calculate());
     if (s->getDir()==1){
+        string massage="";
+        massage+=s->getPath()+""+to_string(s->getVal());
+        char p[massage.length()];
+        for (int i = 0; i < sizeof(p); i++) {
+            p[i] = massage[i];
+        }
+        double client_socket=(*varsMap)["client_socket"]->getVal();
+        int is_sent = send(client_socket, p, strlen(p), 0);
+        if (is_sent == -1) {
+            std::cout << "Error sending message" << std::endl;
+        } else {
+            std::cout << "Hello message sent to Server" << std::endl;
+        }
 
-    //send s to the simulator through the static func
+
 
     }
 
