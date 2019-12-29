@@ -24,7 +24,6 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
         for (int i = 0; i < sizeof(p); i++) {
             p[i] = massage[i];
         }
-        double client_socket=(*varsMap)["client_socket"]->getVal();
         int is_sent = send(client_socket, p, strlen(p), 0);
         if (is_sent == -1) {
             std::cout << "Error sending message" << std::endl;

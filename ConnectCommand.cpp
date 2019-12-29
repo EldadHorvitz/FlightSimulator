@@ -30,8 +30,7 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 
     std::string str = v[index + 1].substr(1, 9);
     const char *cstr = str.c_str();
-    thread *t1 = new thread(clientStart, port, cstr);
-    t1->join();
+    clientStart(port, cstr);
     return 2;
 }
 
@@ -39,7 +38,7 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 int ConnectCommand::clientStart(int port, const char *ip) {
 
     //create socket
-    int client_socket = socket(AF_INET, SOCK_STREAM, 0);
+    client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (client_socket == -1) {
         //error
         std::cerr << "Could not create a socket" << std::endl;
@@ -62,8 +61,7 @@ int ConnectCommand::clientStart(int port, const char *ip) {
     } else {
         std::cout << "Client is now connected to Server" << std::endl;
     }
-    double x=client_socket;
-    Var *a =new Var(x,2,"");
+
     //if here we made a connection
     char hello[] = "hi";
     int is_sent = send(client_socket, hello, strlen(hello), 0);
@@ -73,11 +71,9 @@ int ConnectCommand::clientStart(int port, const char *ip) {
         std::cout << "Hello message sent to Server" << std::endl;
     }
 
-    char buffer[1024] = {0};
-    int valread = read(client_socket, buffer, 1024);
-    std::cout << buffer << std::endl;
 
-    close(client_socket);
+
+
 
     return 0;
 }

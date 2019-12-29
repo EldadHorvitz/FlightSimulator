@@ -14,7 +14,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <cstring>
-
+static int client_socket;
 class ConnectCommand : public Command {
 public:
     ConnectCommand();

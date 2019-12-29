@@ -12,7 +12,7 @@ if rpm == -999 {
 Print(rpm)
 Print("I am the king!")
 }
-while rpm >= 750 {
+if rpm >= 750 {
 Print(rpm)
 Print("I am the king!")
 }
