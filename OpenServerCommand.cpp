@@ -61,9 +61,9 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     }
     // accepting a client
     int addrlen = sizeof(address);
-    client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
+    client_socket_server = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
     cout << "connected!!!!" << endl;
-    if (client_socket == -1) {
+    if (client_socket_server == -1) {
         cerr << "Error accepting" << endl;
         return -1;
     }
@@ -80,7 +80,7 @@ void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, 
     while (isConnect) {
         //reading from client
         char buffer[1024] = {0};
-        read(client_socket, buffer, 1024);
+        read(client_socket_server, buffer, 1024);
         //  int valread = read(client_socket, buffer, 1024);
         std::cout << buffer << std::endl;
         readFromBuffer(buffer, varsMap, simMap);

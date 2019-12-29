@@ -22,7 +22,7 @@
 #include <mutex>
 
 static bool isConnect = false;
-static int client_socket;
+static int client_socket_server;
 static std::mutex m1;
 static std::mutex m2;
 

@@ -15,11 +15,11 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     var = var.substr(1, var.length());
     Interpreter *i1 = new Interpreter();
     Expression *ex = i1->interpret(var, varsMap);
-    Var * s=(*varsMap)[v[index]];
+    Var *s = (*varsMap)[v[index]];
     s->setVal(ex->calculate());
-    if (s->getDir()==1){
-        string massage="";
-        massage+=s->getPath()+""+to_string(s->getVal());
+    if (s->getDir() == 1) {
+        string massage = "";
+        massage += s->getPath() + "" + to_string(s->getVal());
         char p[massage.length()];
         for (int i = 0; i < sizeof(p); i++) {
             p[i] = massage[i];
@@ -30,7 +30,6 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
         } else {
             std::cout << "Hello message sent to Server" << std::endl;
         }
-
 
 
     }
