@@ -61,15 +61,15 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     }
     // accepting a client
     int addrlen = sizeof(address);
-    client_socket_server = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
+    client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
     cout << "connected!!!!" << endl;
-    if (client_socket_server == -1) {
+    if (client_socket == -1) {
         cerr << "Error accepting" << endl;
         return -1;
     }
     close(socketfd);
     isConnect = true;
-    readFromClient1(varsMap, simMap);
+    readFromClient1( varsMap, simMap);
     thread *t1 = new thread(readFromClient, varsMap, simMap);
     return 1;
 }
@@ -77,19 +77,34 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
 
 void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     m2.lock();
+    string s="";
     while (isConnect) {
+        //reading from client
         char buffer[1024] = {0};
-        char buffer2[1024] = {0};
-        read(client_socket_server, buffer, 1024);
-        read(client_socket_server, buffer2, 1024);
-        string s = buffer;
-        string s2 = buffer2;
-        if (s2 != "") {
-            s += s2;
-        }
+        read(client_socket_server, buffer, 1024);/*
         //  int valread = read(client_socket, buffer, 1024);
-        //  std::cout << buffer ;//<< std::endl;
-        readFromBuffer(s, varsMap, simMap);
+      //  std::cout << buffer ;//<< std::endl;
+      string str=buffer;
+       int i=0;
+       while (i<1024&&buffer[i]!='\n'){
+           i++;
+       }
+       if (i<1024){
+           cur=next+str.substr(0,i);
+           next=str.substr(i,str.length()-i);
+           readFromBuffer(cur, varsMap, simMap);
+       }else{
+           next=str;
+       }*/
+        string delimiter = "\n";
+        s+= buffer;
+        size_t pos = 0;
+        string token;
+        while ((pos = s.find(delimiter)) != string::npos) {
+            token = s.substr(0, pos);
+            readFromBuffer(token, varsMap, simMap);
+            s.erase(0, pos + delimiter.length());
+        }
     }
     m2.unlock();
 }
@@ -102,12 +117,12 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
     int i = 0;
     while ((pos = buffer.find(delimiter)) != std::string::npos) {
         token[i] = buffer.substr(0, pos);
-        // cout << token[i] << endl;
+       // cout << token[i] << endl;
         buffer.erase(0, pos + delimiter.length());
         i++;
     }
-    token[i] = buffer.substr(0, buffer.length() - 1);
-    //  cout << token[i] << endl;
+    token[i] = buffer.substr(0, buffer.length());
+  //  cout << token[i] << endl;
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
     (*varsMap)["warp"]->setVal(stod(token[1]));
     (*varsMap)["magnetos"]->setVal(stod(token[2]));
@@ -147,23 +162,15 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
     m1.unlock();
 
 }
-
 void OpenServerCommand::readFromClient1(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
 
-    char buffer[1024] = {0};
-    char buffer2[1024] = {0};
-    read(client_socket_server, buffer, 1024);
-    read(client_socket_server, buffer2, 1024);
-    string s = buffer;
-    string s2 = buffer2;
-    if (s2 != "") {
-        s += s2;
-    }
-    //  int valread = read(client_socket, buffer, 1024);
-    //  std::cout << buffer ;//<< std::endl;
-    readFromBuffer1(s, varsMap, simMap);
-}
+        char buffer[1024] = {0};
+        read(client_socket_server, buffer, 1024);
+        //  int valread = read(client_socket, buffer, 1024);
+        //  std::cout << buffer ;//<< std::endl;
+        readFromBuffer1(buffer, varsMap, simMap);
 
+}
 
 void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     std::string delimiter = ",";
@@ -176,7 +183,7 @@ void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsM
         buffer.erase(0, pos + delimiter.length());
         i++;
     }
-    token[i] = buffer.substr(0, buffer.length() - 1);
+    token[i] = buffer.substr(0, buffer.length()-1);
     //  cout << token[i] << endl;
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
     (*varsMap)["warp"]->setVal(stod(token[1]));
@@ -214,6 +221,8 @@ void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsM
     (*varsMap)["masterbat"]->setVal(stod(token[33]));
     (*varsMap)["masterlat"]->setVal(stod(token[34]));
     (*varsMap)["rpm"]->setVal(stod(token[35]));
+
+
 }
 /*
 
