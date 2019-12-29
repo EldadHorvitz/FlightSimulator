@@ -7,7 +7,7 @@
 
 
 #include "Command.h"
-
+#include "ConnectCommand.h"
 class AssignmentCommand : public Command{
 public:
     AssignmentCommand();

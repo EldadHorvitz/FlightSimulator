@@ -49,16 +49,16 @@ int DefineVarCommand::execute(vector<string> v, int index,map<string, Var *> *va
     Var* a = new Var(-999,dir,path);
     if (simMap->count(path)){
         if (varsMap->count(name)){
-            (*varsMap)[name]=a;
-            (*simMap)[path]=a;
+           // (*varsMap)[name]=a;
+           // (*simMap)[path]=a;
         } else {
-            varsMap->insert({name,a});
-            (*simMap)[path]=a;
+            varsMap->insert({name,(*simMap)[path]});
+          //  (*simMap)[path]=a;
         }
     } else {
         if (varsMap->count(name)){
-            (*varsMap)[name]=a;
-            simMap->insert({path,a});
+           // (*varsMap)[name]=a;
+            simMap->insert({path,(*varsMap)[name]});
         } else {
             varsMap->insert({name,a});
             simMap->insert({path,a});
