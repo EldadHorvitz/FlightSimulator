@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
     map<string, Var *> *simMap = new map<string, Var *>();
     xmlInit(varsMap, simMap);
     parser(v, commandsMap, varsMap, simMap);
-    close(client_socket);
+    close(client_socket_client);
     return 0;
 }
 

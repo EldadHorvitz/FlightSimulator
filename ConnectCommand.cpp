@@ -30,7 +30,7 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 
     std::string str = v[index + 1].substr(1, 9);
     const char *cstr = str.c_str();
-    clientStart(port, cstr);
+    int t= clientStart(port, cstr);
     return 2;
 }
 
@@ -38,8 +38,8 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 int ConnectCommand::clientStart(int port, const char *ip) {
 
     //create socket
-    client_socket = socket(AF_INET, SOCK_STREAM, 0);
-    if (client_socket == -1) {
+    client_socket_client = socket(AF_INET, SOCK_STREAM, 0);
+    if (client_socket_client == -1) {
         //error
         std::cerr << "Could not create a socket" << std::endl;
         return -1;
@@ -54,7 +54,7 @@ int ConnectCommand::clientStart(int port, const char *ip) {
     // to a number that the network understands.
 
     // Requesting a connection with the Server on local host with port 8081
-    int is_connect = connect(client_socket, (struct sockaddr *) &address, sizeof(address));
+    int is_connect = connect(client_socket_client, (struct sockaddr *) &address, sizeof(address));
     if (is_connect == -1) {
         std::cerr << "Could not connect to host Server" << std::endl;
         return -2;
