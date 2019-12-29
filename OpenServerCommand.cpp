@@ -82,7 +82,7 @@ void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, 
         char buffer[1024] = {0};
         read(client_socket_server, buffer, 1024);
         //  int valread = read(client_socket, buffer, 1024);
-        std::cout << buffer << std::endl;
+        //  std::cout << buffer << std::endl;
         readFromBuffer(buffer, varsMap, simMap);
     }
     m2.unlock();
@@ -100,6 +100,8 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
         buffer.erase(0, pos + delimiter.length());
         i++;
     }
+
+
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
     (*varsMap)["warp"]->setVal(stod(token[1]));
     (*varsMap)["magnetos"]->setVal(stod(token[2]));
@@ -137,7 +139,6 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
     (*varsMap)["masterlat"]->setVal(stod(token[34]));
     (*varsMap)["rpm"]->setVal(stod(token[35]));
     m1.unlock();
-
 }
 
 /*
