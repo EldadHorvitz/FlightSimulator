@@ -77,13 +77,34 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
 
 void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     m2.lock();
+    string s="";
     while (isConnect) {
         //reading from client
         char buffer[1024] = {0};
-        read(client_socket, buffer, 1024);
+        read(client_socket, buffer, 1024);/*
         //  int valread = read(client_socket, buffer, 1024);
       //  std::cout << buffer ;//<< std::endl;
-        readFromBuffer(buffer, varsMap, simMap);
+      string str=buffer;
+       int i=0;
+       while (i<1024&&buffer[i]!='\n'){
+           i++;
+       }
+       if (i<1024){
+           cur=next+str.substr(0,i);
+           next=str.substr(i,str.length()-i);
+           readFromBuffer(cur, varsMap, simMap);
+       }else{
+           next=str;
+       }*/
+        string delimiter = "\n";
+        s+= buffer;
+        size_t pos = 0;
+        string token;
+        while ((pos = s.find(delimiter)) != string::npos) {
+            token = s.substr(0, pos);
+            readFromBuffer(token, varsMap, simMap);
+            s.erase(0, pos + delimiter.length());
+        }
     }
     m2.unlock();
 }
@@ -100,7 +121,7 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
         buffer.erase(0, pos + delimiter.length());
         i++;
     }
-    token[i] = buffer.substr(0, buffer.length()-1);
+    token[i] = buffer.substr(0, buffer.length());
   //  cout << token[i] << endl;
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
     (*varsMap)["warp"]->setVal(stod(token[1]));
