@@ -30,7 +30,7 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 
     std::string str = v[index + 1].substr(1, 9);
     const char *cstr = str.c_str();
-    int t= clientStart(port, cstr);
+    clientStart(port, cstr);
     return 2;
 }
 
