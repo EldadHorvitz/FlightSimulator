@@ -14,14 +14,14 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <cstring>
-static int client_socket;
+static int client_socket_client;
 class ConnectCommand : public Command {
 public:
     ConnectCommand();
 
     int execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) override;
 
-   static  int clientStart(int port, const char *ip,Var * var);
+    int clientStart(int port, const char *ip);
 };
 
 
