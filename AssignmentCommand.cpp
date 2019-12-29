@@ -16,7 +16,6 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     Var * s=(*varsMap)[v[index]];
     s->setVal(ex->calculate());
     if (s->getDir()==1){
-
     //send s to the simulator through the static func
 
     }

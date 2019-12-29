@@ -45,7 +45,7 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     sockaddr_in address;//in means IP4
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = inet_addr("127.0.0.1");//give me any IP allocated for my machine.
-    //address.sin_addr.s_addr = INADDR_ANY;
+    // address.sin_addr.s_addr = inet_addr("10.0.2.2");
     address.sin_port = htons(portNum);
     //we need to convert our number
     //to a number that the network understands
@@ -62,7 +62,7 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     // accepting a client
     int addrlen = sizeof(address);
     client_socket = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
-
+    cout << "connected!!!!" << endl;
     if (client_socket == -1) {
         cerr << "Error accepting" << endl;
         return -1;
@@ -76,6 +76,7 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
 
 
 void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+    m2.lock();
     while (isConnect) {
         //reading from client
         char buffer[1024] = {0};
@@ -84,22 +85,25 @@ void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, 
         std::cout << buffer << std::endl;
         readFromBuffer(buffer, varsMap, simMap);
     }
-
+    m2.unlock();
 }
 
 void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     m1.lock();
     std::string delimiter = ",";
     size_t pos = 0;
-    std::string token;
+    std::string token[36];
     int i = 0;
     while ((pos = buffer.find(delimiter)) != std::string::npos) {
-        token = buffer.substr(0, pos);
+        token[i] = buffer.substr(0, pos);
         cout << token << endl;
         buffer.erase(0, pos + delimiter.length());
         i++;
     }
+    (*varsMap)["airspeed"]->setVal(stod(token[0]));
+
     m1.unlock();
+
 }
 
 /*

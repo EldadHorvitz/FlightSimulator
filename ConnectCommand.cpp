@@ -13,6 +13,7 @@ ConnectCommand::ConnectCommand() {
 }
 
 int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+    /*
     double port = 0;
     string portString = "";
     int flag = 0;
@@ -64,6 +65,7 @@ int ConnectCommand::clientStart(int port, const char *ip,Var * var) {
     }
 
     //if here we made a connection
+
     char hello[] = var->getPath()+ " "+ var->getVal().stoi();
     int is_sent = send(client_socket, hello, strlen(hello), 0);
     if (is_sent == -1) {
@@ -77,6 +79,6 @@ int ConnectCommand::clientStart(int port, const char *ip,Var * var) {
     std::cout << buffer << std::endl;
 
     close(client_socket);
-
+*/
     return 0;
 }

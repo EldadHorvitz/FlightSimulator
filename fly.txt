@@ -1,24 +1,3 @@
-var alt <- sim("/instrumentation/altimeter/indicated-altitude-ft")
-var rpm <- sim("/engines/engine/rpm")
-if rpm <= 750 {
-	Print(rpm)
-	Print("check1")
-}
-if rpm < 750 {
-	Print(rpm)
-	Print("check2")
-}
-if rpm == -999 {
-Print(rpm)
-Print("I am the king!")
-}
-while rpm >= 750 {
-Print(rpm)
-Print("I am the king!")
-}
-var warp -> sim("/sim/time/warp")
-var magnetos -> sim("/controls/switches/magnetos")
-var throttle -> sim("/controls/engines/current-engine/throttle")
 openDataServer(5400)
 connectControlClient("127.0.0.1",5402)
 var warp -> sim("/sim/time/warp")

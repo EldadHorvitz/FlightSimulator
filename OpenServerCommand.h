@@ -24,6 +24,8 @@
 static bool isConnect = false;
 static int client_socket;
 static std::mutex m1;
+static std::mutex m2;
+
 
 class OpenServerCommand : public Command {
 

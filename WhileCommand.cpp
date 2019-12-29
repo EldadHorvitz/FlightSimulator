@@ -236,7 +236,6 @@ map<string, Command *> WhileCommand::initilize() {
     hash.insert({"while", c});
     c = new IfCommand();
     hash.insert({"if", c});
-
     return hash;
 }
 string WhileCommand::RemoveChar(string str, char c)

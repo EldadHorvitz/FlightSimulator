@@ -21,7 +21,7 @@ public:
 
     int execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) override;
 
-   static  int clientStart(int port, const char *ip);
+   static  int clientStart(int port, const char *ip,Var * var);
 };
 
 
