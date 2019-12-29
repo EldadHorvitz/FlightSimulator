@@ -45,6 +45,8 @@ public:
 
 
     static void readFromBuffer1(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap);
+
+    static void append(char *s, char c);
 };
 
 
