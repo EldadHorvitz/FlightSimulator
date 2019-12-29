@@ -118,8 +118,24 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
     (*varsMap)["indicated"]->setVal(stod(token[15]));
     (*varsMap)["magnetic"]->setVal(stod(token[16]));
     (*varsMap)["slip"]->setVal(stod(token[17]));
-
-
+    (*varsMap)["turn"]->setVal(stod(token[18]));
+    (*varsMap)["vertical"]->setVal(stod(token[19]));
+    (*varsMap)["aileron"]->setVal(stod(token[20]));
+    (*varsMap)["elevator"]->setVal(stod(token[21]));
+    (*varsMap)["rudder"]->setVal(stod(token[22]));
+    (*varsMap)["flight_flaps"]->setVal(stod(token[23]));
+    (*varsMap)["engine_throttle"]->setVal(stod(token[24]));
+    (*varsMap)["throttle"]->setVal(stod(token[25]));
+    (*varsMap)["masteravionics"]->setVal(stod(token[26]));
+    (*varsMap)["starter"]->setVal(stod(token[27]));
+    (*varsMap)["autostart"]->setVal(stod(token[28]));
+    (*varsMap)["breaks"]->setVal(stod(token[29]));
+    (*varsMap)["brakeparking"]->setVal(stod(token[30]));
+    (*varsMap)["primer"]->setVal(stod(token[31]));
+    (*varsMap)["mixture"]->setVal(stod(token[32]));
+    (*varsMap)["masterbat"]->setVal(stod(token[33]));
+    (*varsMap)["masterlat"]->setVal(stod(token[34]));
+    (*varsMap)["rpm"]->setVal(stod(token[35]));
     m1.unlock();
 
 }
