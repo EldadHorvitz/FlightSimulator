@@ -259,4 +259,3 @@ map<string, Command *> initilize() {
 
     return hash;
 }
-

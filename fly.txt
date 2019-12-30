@@ -33,7 +33,6 @@ masterlat = 1
 masteravionics = 1+3/3
 brakeparking = 0
 primer = 3
-Print("primer")
 starter = 1
 autostart = 1
 Print("engine is warming...")
@@ -48,7 +47,7 @@ breaks = 0
 throttle = 1
 while alt < 1000 {
 	rudder = (h0 - heading)/80
-	aileron = -roll / 70
+	aileron = roll / 70
 	elevator = pitch / 50
 	Sleep(250)
 }

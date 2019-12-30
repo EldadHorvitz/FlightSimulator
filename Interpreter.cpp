@@ -286,7 +286,5 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
             throw "bad input";
         }
     }
-
     return experessionStack.top();
-
 }
