@@ -25,6 +25,9 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
         //string message="set /sim/time/warp 30000 \r\n";
         //ssize_t returl_val = write(client_socket_client, message.c_str(), message.length());
         int is_sent = send((*varsMap)["client_sock"]->getDir(), message.c_str(), strlen(message.c_str()), 0);
+        if (is_sent == -1) {
+            std::cout << "Error sending message" << std::endl;
+        }
        // cout<<"THE CHECKKKKKK: "<<is_sent<<endl;
         /*
         char p[message.length()];

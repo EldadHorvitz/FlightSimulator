@@ -58,8 +58,6 @@ int ConnectCommand::clientStart(int port, const char *ip,map<string, Var *> *var
     if (is_connect == -1) {
         std::cerr << "Could not connect to host Server" << std::endl;
         return -2;
-    } else {
-        std::cout << "Client is now connected to Server" << std::endl;
     }
     Var* tr=new Var(client_socket,client_socket,"" );
     varsMap->insert({"client_sock",tr});
