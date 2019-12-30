@@ -30,16 +30,16 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 
     std::string str = v[index + 1].substr(1, 9);
     const char *cstr = str.c_str();
-    clientStart(port, cstr);
+    clientStart(port, cstr,varsMap);
     return 2;
 }
 
 
-int ConnectCommand::clientStart(int port, const char *ip) {
+int ConnectCommand::clientStart(int port, const char *ip,map<string, Var *> *varsMap) {
 
     //create socket
-    client_socket_client = socket(AF_INET, SOCK_STREAM, 0);
-    if (client_socket_client == -1) {
+    int client_socket = socket(AF_INET, SOCK_STREAM, 0);
+    if (client_socket == -1) {
         //error
         std::cerr << "Could not create a socket" << std::endl;
         return -1;
@@ -54,14 +54,19 @@ int ConnectCommand::clientStart(int port, const char *ip) {
     // to a number that the network understands.
 
     // Requesting a connection with the Server on local host with port 8081
-    int is_connect = connect(client_socket_client, (struct sockaddr *) &address, sizeof(address));
+    int is_connect = connect(client_socket, (struct sockaddr *) &address, sizeof(address));
     if (is_connect == -1) {
         std::cerr << "Could not connect to host Server" << std::endl;
         return -2;
     } else {
         std::cout << "Client is now connected to Server" << std::endl;
     }
-
+    Var* tr=new Var(client_socket,client_socket,"" );
+    varsMap->insert({"client_sock",tr});
+    //string message="set /sim/time/warp 32000 \r\n";
+    //ssize_t returl_val = write(client_socket_client, message.c_str(), message.length());
+    //int is_sent = send(client_socket, message.c_str(), strlen(message.c_str()), 0);
+  //  cout<<"THE CHECKKKKKK!!!!!: "<<is_sent<<endl;
 
     return 0;
 }

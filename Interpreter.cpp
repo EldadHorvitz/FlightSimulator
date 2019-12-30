@@ -161,13 +161,13 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
             this->operatorsStack.push(op);
         } else if (isLetter(c)) {
             int index = i;
-            while (!(isOperator(c)) && c != '(' && c != ')') {
+            while (!(isOperator(c)) && c != '('&& c != ')'&& c != ' ') {
                 i++;
                 c = exp[i];
             }
-            string varName = exp.substr(index, i - index - 1);
+            string varName = exp.substr(index, i - index );
             if (!(varsMap->count(varName))) {
-                throw "bad input";
+                throw "bad input1";
             } else {
                 this->numbersQueue.push(varName);
             }
@@ -179,14 +179,14 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
             while (this->operatorsStack.top() != "(") {
                 string temp = this->operatorsStack.top();
                 if (this->operatorsStack.empty()) {
-                    throw "bad input";
+                    throw "bad input2";
                 }
                 this->operatorsStack.pop();
                 this->numbersQueue.push(temp);
             }
             this->operatorsStack.pop();
         } else {
-            throw "bad input";
+            throw "bad input3";
         }
     }
     while (!this->operatorsStack.empty()) {
@@ -214,59 +214,59 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
         } else if (isOperatorStr(this->numbersQueue.front())) {
             if (this->numbersQueue.front() == "*") {
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input4";
                 }
                 this->numbersQueue.pop();
                 first = experessionStack.top();
                 experessionStack.pop();
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input5";
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
                 experessionStack.push(new Mul(second, first));
             } else if (this->numbersQueue.front() == "/") {
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input6";
                 }
                 this->numbersQueue.pop();
                 first = experessionStack.top();
                 experessionStack.pop();
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input7";
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
                 experessionStack.push(new Div(second, first));
             } else if (this->numbersQueue.front() == "+") {
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input8";
                 }
                 this->numbersQueue.pop();
                 first = experessionStack.top();
                 experessionStack.pop();
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input9";
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
                 experessionStack.push(new Plus(second, first));
             } else if (this->numbersQueue.front() == "-") {
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input10";
                 }
                 this->numbersQueue.pop();
                 first = experessionStack.top();
                 experessionStack.pop();
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input11";
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
                 experessionStack.push(new Minus(second, first));
             } else if (this->numbersQueue.front() == "~") {
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input12";
                 }
                 this->numbersQueue.pop();
                 first = experessionStack.top();
@@ -274,7 +274,7 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
                 experessionStack.push(new UMinus(first));
             } else if (this->numbersQueue.front() == "#") {
                 if (experessionStack.empty()) {
-                    throw "bad input";
+                    throw "bad input13";
                 }
                 this->numbersQueue.pop();
                 first = experessionStack.top();
@@ -283,7 +283,7 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
             }
 
         } else {
-            throw "bad input";
+            throw "bad input14";
         }
     }
     return experessionStack.top();

@@ -123,7 +123,9 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
     token[i] = buffer.substr(0, buffer.length());
     //  cout << token[i] << endl;
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
+    //cout<<"check1: "<<(*varsMap)["warp"]->getVal()<<endl;
     (*varsMap)["warp"]->setVal(stod(token[1]));
+   // cout<<"check2: "<<(*varsMap)["warp"]->getVal()<<endl;
     (*varsMap)["magnetos"]->setVal(stod(token[2]));
     (*varsMap)["heading"]->setVal(stod(token[3]));
     (*varsMap)["alt"]->setVal(stod(token[4]));

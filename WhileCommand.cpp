@@ -136,7 +136,7 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
                         x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
-                    ++index;
+                    ++x;
                 }
             }
             first = i1->interpret(expfirst, varsMap);
@@ -196,7 +196,6 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
             x = 2+index;
             while (x < num) {
                 v[x]=RemoveChar(v[x],'\t');
-                v[x]=RemoveChar(v[x],' ');
                 if (hashMap.count(v[x])) {
                     Command *c = hashMap[v[x]];
                     if (c != NULL) {
@@ -208,7 +207,7 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
                         x += c->execute(v, x, varsMap, simMap);
                     }
                 } else {
-                    ++index;
+                    ++x;
                 }
             }
             first = i1->interpret(expfirst, varsMap);
