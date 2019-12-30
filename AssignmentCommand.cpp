@@ -25,6 +25,11 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
         string message = "set " + s->getPath() + " " + to_string(s->getVal()) + " \r\n";
         int is_sent = send((*varsMap)["client_sock"]->getDir(), message.c_str(), strlen(message.c_str()), 0);
     }
-
+    delete i1;
+    i1 = nullptr;
     return 2;
+}
+
+AssignmentCommand::~AssignmentCommand() {
+
 }

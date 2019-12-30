@@ -38,6 +38,8 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         if (ca != NULL) {
             int res = ca->execute(tempV, 0, varsMap, simMap);
         }
+        delete ca;
+        ca = nullptr;
     } else {
         if (c == '-' && v[index + 1][i + 1] == '>') {
             dir = 1;
@@ -79,7 +81,11 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
                 simMap->insert({path, a});
             }
         }
+        delete a;
+        a = nullptr;
+
     }
+
     return 2;
 
 }

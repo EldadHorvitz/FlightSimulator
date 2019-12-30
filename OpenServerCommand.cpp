@@ -30,6 +30,8 @@ int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *
     } else {
         throw "error";
     }
+    delete i1;
+    i1 = nullptr;
 }
 
 //starrting the server

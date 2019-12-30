@@ -240,6 +240,8 @@ void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, 
             if (c != NULL) {
                 index += c->execute(lexered, index, varsMap, simMap);
             }
+            delete c;
+            c = nullptr;
         } else {
             ++index;
         }

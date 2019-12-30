@@ -32,6 +32,7 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
     const char *cstr = str.c_str();
     clientStart(port, cstr, varsMap);
     delete i1;
+    i1 = nullptr;
     return 2;
 }
 
