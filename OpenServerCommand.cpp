@@ -16,6 +16,7 @@ OpenServerCommand::OpenServerCommand() {
 
 }
 
+//excuting the Open Data Server Command
 int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     Interpreter *i1 = new Interpreter();
     string port = v[index + 1];
@@ -31,7 +32,7 @@ int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *
     }
 }
 
-
+//starrting the server
 int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
 
     int socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -73,28 +74,14 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     return 1;
 }
 
-
+//reading from the client
 void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     m2.lock();
     string s = "";
     while (isConnect) {
         //reading from client
         char buffer[1024] = {0};
-        read(client_socket_server, buffer, 1024);/*
-        //  int valread = read(client_socket, buffer, 1024);
-      //  std::cout << buffer ;//<< std::endl;
-      string str=buffer;
-       int i=0;
-       while (i<1024&&buffer[i]!='\n'){
-           i++;
-       }
-       if (i<1024){
-           cur=next+str.substr(0,i);
-           next=str.substr(i,str.length()-i);
-           readFromBuffer(cur, varsMap, simMap);
-       }else{
-           next=str;
-       }*/
+        read(client_socket_server, buffer, 1024);
         string delimiter = "\n";
         s += buffer;
         size_t pos = 0;
@@ -108,6 +95,7 @@ void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, 
     m2.unlock();
 }
 
+//reading from the given buffer
 void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     m1.lock();
     std::string delimiter = ",";
@@ -116,16 +104,12 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
     int i = 0;
     while ((pos = buffer.find(delimiter)) != std::string::npos) {
         token[i] = buffer.substr(0, pos);
-        // cout << token[i] << endl;
         buffer.erase(0, pos + delimiter.length());
         i++;
     }
     token[i] = buffer.substr(0, buffer.length());
-    //  cout << token[i] << endl;
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
-    //cout<<"check1: "<<(*varsMap)["warp"]->getVal()<<endl;
     (*varsMap)["warp"]->setVal(stod(token[1]));
-   // cout<<"check2: "<<(*varsMap)["warp"]->getVal()<<endl;
     (*varsMap)["magnetos"]->setVal(stod(token[2]));
     (*varsMap)["heading"]->setVal(stod(token[3]));
     (*varsMap)["alt"]->setVal(stod(token[4]));
@@ -165,7 +149,6 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
 }
 
 
-
 void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     std::string delimiter = ",";
     size_t pos = 0;
@@ -173,12 +156,10 @@ void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsM
     int i = 0;
     while ((pos = buffer.find(delimiter)) != std::string::npos) {
         token[i] = buffer.substr(0, pos);
-        // cout << token[i] << endl;
         buffer.erase(0, pos + delimiter.length());
         i++;
     }
     token[i] = buffer.substr(0, buffer.length() - 1);
-    //  cout << token[i] << endl;
     (*varsMap)["airspeed"]->setVal(stod(token[0]));
     (*varsMap)["warp"]->setVal(stod(token[1]));
     (*varsMap)["magnetos"]->setVal(stod(token[2]));
@@ -215,67 +196,4 @@ void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsM
     (*varsMap)["masterbat"]->setVal(stod(token[33]));
     (*varsMap)["masterlat"]->setVal(stod(token[34]));
     (*varsMap)["rpm"]->setVal(stod(token[35]));
-
-
 }
-/*
-
-
-//create socket
-int socketfd = socket(AF_INET, SOCK_STREAM, 0);
-if (socketfd == -1) {
-    //error
-    std::cerr << "Could not create a socket" << std::endl;
-    return -1;
-}
-
-//bind socket to IP address
-// we first need to create the sockaddr obj.
-sockaddr_in address; //in means IP4
-address.sin_family = AF_INET;
-address.sin_addr.s_addr = inet_addr("127.0.0.1");
-//   address.sin_addr.s_addr= INADDR_ANY; //give me any IP allocated for my machine
-address.sin_port = htons(portNum);
-//we need to convert our number
-// to a number that the network understands.
-
-//the actual bind command
-if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
-    std::cerr << "Could not bind the socket to an IP" << std::endl;
-    return -2;
-}
-
-//making socket listen to the port
-if (listen(socketfd, 5) == -1) { //can also set to SOMAXCON (max connections)
-    std::cerr << "Error during listening command" << std::endl;
-    return -3;
-} else {
-    std::cout << "Server is now listening ..." << std::endl;
-}
-
-// accepting a client
-socklen_t addrlen = sizeof(sockaddr_in);
-int client_socket = accept(socketfd, (struct sockaddr *) &address, &addrlen);
-std::cout << "adfsadfdsfs" << std::endl;
-
-
-if (client_socket == -1) {
-    std::cerr << "Error accepting client" << std::endl;
-    return -4;
-}
-
-close(socketfd); //closing the listening socket
-
-//reading from client
-char buffer[1024] = {0};
-int valread = read(client_socket, buffer, 1024);
-std::cout << buffer << std::endl;
-
-//writing back to client
-// char *hello = "";
-//  send(client_socket , hello , strlen(hello) , 0 );
-std::cout << "Hello message sent\n" << std::endl;
-return 0;
-
-}
-*/

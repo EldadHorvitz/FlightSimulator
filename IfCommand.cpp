@@ -14,7 +14,7 @@
 #include "Interpreter.h"
 
 IfCommand::IfCommand() {}
-
+//excuting the if command
 int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     int num = 0;
     while (v[num + index] != "}") {
@@ -221,6 +221,8 @@ map<string, Command *> IfCommand::initilize() {
 
     return hash;
 }
+
+
 string IfCommand::RemoveChar(string str, char c)
 {
     string result;

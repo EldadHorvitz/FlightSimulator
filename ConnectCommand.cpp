@@ -30,13 +30,13 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 
     std::string str = v[index + 1].substr(1, 9);
     const char *cstr = str.c_str();
-    clientStart(port, cstr,varsMap);
+    clientStart(port, cstr, varsMap);
+    delete i1;
     return 2;
 }
 
 
-int ConnectCommand::clientStart(int port, const char *ip,map<string, Var *> *varsMap) {
-
+int ConnectCommand::clientStart(int port, const char *ip, map<string, Var *> *varsMap) {
     //create socket
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if (client_socket == -1) {
@@ -61,12 +61,7 @@ int ConnectCommand::clientStart(int port, const char *ip,map<string, Var *> *var
     } else {
         std::cout << "Client is now connected to Server" << std::endl;
     }
-    Var* tr=new Var(client_socket,client_socket,"" );
-    varsMap->insert({"client_sock",tr});
-    //string message="set /sim/time/warp 32000 \r\n";
-    //ssize_t returl_val = write(client_socket_client, message.c_str(), message.length());
-    //int is_sent = send(client_socket, message.c_str(), strlen(message.c_str()), 0);
-  //  cout<<"THE CHECKKKKKK!!!!!: "<<is_sent<<endl;
-
+    Var *tr = new Var(client_socket, client_socket, "");
+    varsMap->insert({"client_sock", tr});
     return 0;
 }

@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <iostream>
-
+#include "thread"
 #include <arpa/inet.h>
 #include <array>
 #include <unordered_map>
@@ -25,7 +25,6 @@ static bool isConnect = false;
 static int client_socket_server;
 static std::mutex m1;
 static std::mutex m2;
-
 
 class OpenServerCommand : public Command {
 

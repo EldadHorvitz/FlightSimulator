@@ -8,6 +8,7 @@
 
 DefineVarCommand::DefineVarCommand() {}
 
+//excuting the DeifneVar command
 int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     int i = 0;
     char c = v[index + 1][i];
@@ -19,7 +20,7 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         i++;
         c = v[index + 1][i];
     }
-    while (isalpha(c)||isdigit(c)) {
+    while (isalpha(c) || isdigit(c)) {
         name += c;
         i++;
         c = v[index + 1][i];
@@ -29,10 +30,10 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         c = v[index + 1][i];
     }
     if (c == '=') {
-       //assignment command
+        //assignment command
         vector<string> tempV;
-        tempV.insert(tempV.begin() , name);
-        tempV.insert(tempV.begin()+1 , v[index + 1].substr(i, v[index + 1].length()-1));
+        tempV.insert(tempV.begin(), name);
+        tempV.insert(tempV.begin() + 1, v[index + 1].substr(i, v[index + 1].length() - 1));
         Command *ca = new AssignmentCommand();
         if (ca != NULL) {
             int res = ca->execute(tempV, 0, varsMap, simMap);
@@ -59,10 +60,10 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         Var *a = new Var(0, dir, path);
         if (simMap->count(path)) {
             if (varsMap->count(name)) {
-                 (*varsMap)[name]->setDir(dir);
-                 if (path!=(*varsMap)[name]->getPath()){
-                     simMap->insert({path, (*varsMap)[name]});
-                 }
+                (*varsMap)[name]->setDir(dir);
+                if (path != (*varsMap)[name]->getPath()) {
+                    simMap->insert({path, (*varsMap)[name]});
+                }
 
             } else {
                 (*simMap)[path]->setDir(dir);

@@ -16,6 +16,7 @@
 
 using namespace std;
 
+//functions declerations
 vector<string> lexer(char *string);
 
 void
@@ -37,14 +38,15 @@ int main(int argc, char *argv[]) {
     xmlInit(varsMap, simMap);
     try {
         parser(v, commandsMap, varsMap, simMap);;
-    } catch (const char* e) {
-        cout<<e<<endl;
+    } catch (const char *e) {
+        cout << e << endl;
     }
-
     close((*varsMap)["client_sock"]->getDir());
+
     return 0;
 }
 
+//initalzing the xmlTable
 void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     //1
     Var *a = new Var(0, -1, "/instrumentation/airspeed-indicator/indicated-speed-kt");
@@ -194,7 +196,7 @@ void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
 
 }
 
-
+//lexer function to read from the provided txt file
 vector<string> lexer(char *filename) {
     vector<string> vector1;
     ifstream file;
@@ -223,7 +225,7 @@ vector<string> lexer(char *filename) {
     return vector1;
 }
 
-
+//parser function that will excute the commands given in the file
 void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap,
             map<string, Var *> *simMap) {
     int index = 0;
@@ -245,6 +247,7 @@ void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, 
     isConnect = false;
 }
 
+//initalzing the Commands map
 map<string, Command *> initilize() {
     map<string, Command *> hash;
     Command *c = new DefineVarCommand();

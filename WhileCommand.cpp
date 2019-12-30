@@ -26,7 +26,7 @@
 
 
 WhileCommand::WhileCommand() {}
-
+//excuting the while command
 int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     int num = 0;
     while (v[num + index] != "}") {
