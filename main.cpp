@@ -222,6 +222,7 @@ vector<string> lexer(char *filename) {
         }
         c = file.get();
     }
+    vector1.insert(vector1.begin() + indexVector, temp);
     return vector1;
 }
 

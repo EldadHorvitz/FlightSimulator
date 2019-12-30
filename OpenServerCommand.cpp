@@ -65,7 +65,7 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     // accepting a client
     int addrlen = sizeof(address);
     client_socket_server = accept(socketfd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
-    cout << "connected!!!!" << endl;
+
     if (client_socket_server == -1) {
         cerr << "Error accepting" << endl;
         return -1;
