@@ -8,6 +8,9 @@ coding by Eldad Horvitz and Nizan Mandelblit
 GitHub link of the project:
 
 * [GithHub Project](https://github.com/NizanMandelblit/ex3).
+#### Contributors
+* [Nizan Mandelblit](https://github.com/NizanMandelblit)
+* [Eldad Horvitz](https://github.com/EldadHorvitz)
 
 #### Prerequisites
 in order to properly run the project, the follwoing will need to be provided by the user:
@@ -24,4 +27,8 @@ the expected command line is to be:
 
 The goal of this project is to connect to the FlightGear simulator game, and to send/recieve data from and to the simulator.
 
-#### Goal
+#### Compoistion
+
+
+## Work Flow
+
