@@ -9,7 +9,7 @@
 
 SleepCommand::SleepCommand() {}
 
-//excuting the sleep command
+//excuting the sleep command that makes the main thread sleep
 int SleepCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
                           __attribute__((unused)) map<string, Var *> *simMap) {
     Interpreter *i1 = new Interpreter();

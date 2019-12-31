@@ -8,11 +8,12 @@
 
 DefineVarCommand::DefineVarCommand() {}
 
-//excuting the DeifneVar command
+//excuting the DeifneVar command by inserting the new var to the symbol table maps
 int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     int i = 0;
     char c = v[index + 1][i];
     string name = "";
+    //direction- if it needs to send the data to the simulator
     int dir = -999;
     string path = "";
     while (!isalpha(c)) {
@@ -28,6 +29,7 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         i++;
         c = v[index + 1][i];
     }
+    //if it just needs to be initalzed by a value
     if (c == '=') {
         //assignment command
         vector<string> tempV;
@@ -39,6 +41,7 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         }
         delete ca;
         ca = nullptr;
+        //if it has to set the dir and the path
     } else {
         if (c == '-' && v[index + 1][i + 1] == '>') {
             dir = 1;

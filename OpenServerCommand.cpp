@@ -78,9 +78,8 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     return 1;
 }
 
-//reading from the client
-void
-OpenServerCommand::readFromClient(map<string, Var *> *varsMap, __attribute__((unused)) map<string, Var *> *simMap) {
+//reading from the client in a thread
+void  OpenServerCommand::readFromClient(map<string, Var *> *varsMap, __attribute__((unused)) map<string, Var *> *simMap) {
     m2.lock();
     string s = "";
     while (isConnect) {
@@ -100,7 +99,7 @@ OpenServerCommand::readFromClient(map<string, Var *> *varsMap, __attribute__((un
     m2.unlock();
 }
 
-//reading from the given buffer
+//reading from the given buffer and updating it in the symbol table
 void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMap,
                                        __attribute__((unused)) map<string, Var *> *simMap) {
     m1.lock();
@@ -155,52 +154,3 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
 }
 
 
-void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsMap,
-                                        __attribute__((unused)) map<string, Var *> *simMap) {
-    std::string delimiter = ",";
-    size_t pos = 0;
-    std::string token[36];
-    int i = 0;
-    while ((pos = buffer.find(delimiter)) != std::string::npos) {
-        token[i] = buffer.substr(0, pos);
-        buffer.erase(0, pos + delimiter.length());
-        i++;
-    }
-    token[i] = buffer.substr(0, buffer.length() - 1);
-    (*varsMap)["airspeed"]->setVal(stod(token[0]));
-    (*varsMap)["warp"]->setVal(stod(token[1]));
-    (*varsMap)["magnetos"]->setVal(stod(token[2]));
-    (*varsMap)["heading"]->setVal(stod(token[3]));
-    (*varsMap)["alt"]->setVal(stod(token[4]));
-    (*varsMap)["altimeter"]->setVal(stod(token[5]));
-    (*varsMap)["attitude"]->setVal(stod(token[6]));
-    (*varsMap)["roll"]->setVal(stod(token[7]));
-    (*varsMap)["pitch"]->setVal(stod(token[8]));
-    (*varsMap)["attitude2"]->setVal(stod(token[9]));
-    (*varsMap)["attitude3"]->setVal(stod(token[10]));
-    (*varsMap)["pressure"]->setVal(stod(token[11]));
-    (*varsMap)["gps"]->setVal(stod(token[12]));
-    (*varsMap)["gps2"]->setVal(stod(token[13]));
-    (*varsMap)["gps3"]->setVal(stod(token[14]));
-    (*varsMap)["indicated"]->setVal(stod(token[15]));
-    (*varsMap)["magnetic"]->setVal(stod(token[16]));
-    (*varsMap)["slip"]->setVal(stod(token[17]));
-    (*varsMap)["turn"]->setVal(stod(token[18]));
-    (*varsMap)["vertical"]->setVal(stod(token[19]));
-    (*varsMap)["aileron"]->setVal(stod(token[20]));
-    (*varsMap)["elevator"]->setVal(stod(token[21]));
-    (*varsMap)["rudder"]->setVal(stod(token[22]));
-    (*varsMap)["flight_flaps"]->setVal(stod(token[23]));
-    (*varsMap)["engine_throttle"]->setVal(stod(token[24]));
-    (*varsMap)["throttle"]->setVal(stod(token[25]));
-    (*varsMap)["masteravionics"]->setVal(stod(token[26]));
-    (*varsMap)["starter"]->setVal(stod(token[27]));
-    (*varsMap)["autostart"]->setVal(stod(token[28]));
-    (*varsMap)["breaks"]->setVal(stod(token[29]));
-    (*varsMap)["brakeparking"]->setVal(stod(token[30]));
-    (*varsMap)["primer"]->setVal(stod(token[31]));
-    (*varsMap)["mixture"]->setVal(stod(token[32]));
-    (*varsMap)["masterbat"]->setVal(stod(token[33]));
-    (*varsMap)["masterlat"]->setVal(stod(token[34]));
-    (*varsMap)["rpm"]->setVal(stod(token[35]));
-}

@@ -12,11 +12,12 @@
 ConnectCommand::ConnectCommand() {
 
 }
-
+//opens a socket as aclient in order to be able to send data to the simulator
 int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,__attribute__((unused)) map<string, Var *> *simMap) {
     double port = 0;
     string portString = "";
     int flag = 0;
+    //orgnaizing the data to be able to work with it
     for (char c:v[index + 1]) {
         if (c == ',') {
             flag = 1;
@@ -31,6 +32,7 @@ int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *var
 
     std::string str = v[index + 1].substr(1, 9);
     const char *cstr = str.c_str();
+    //opens the client socket and starts the communication
     clientStart(port, cstr, varsMap);
     delete i1;
     i1 = nullptr;
@@ -61,6 +63,7 @@ int ConnectCommand::clientStart(int port, const char *ip, map<string, Var *> *va
         std::cerr << "Could not connect to host Server" << std::endl;
         return -2;
     }
+    //saves the client_socket in the global map in order to be able to use it out of the class
     tr = new Var(client_socket, client_socket, "");
     varsMap->insert({"client_sock", tr});
     return 0;

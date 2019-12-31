@@ -42,8 +42,6 @@ public:
 
     static void readFromBuffer(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap);
 
-    static void readFromBuffer1(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap);
-
 };
 
 

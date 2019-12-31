@@ -16,12 +16,14 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     var = var.substr(1, var.length());
     Interpreter *i1 = new Interpreter();
     Expression *ex = i1->interpret(var, varsMap);
+    //checks if its a new var
     if (!varsMap->count(v[index])) {
         globalVarAssignment = new Var(-999, -1, "");
         varsMap->insert({v[index], globalVarAssignment});
     }
     Var *s = (*varsMap)[v[index]];
     s->setVal(ex->calculate());
+    //checks if it needs to send the data to the simulator
     if (s->getDir() == 1) {
         string message = "set " + s->getPath() + " " + to_string(s->getVal()) + " \r\n";
         int is_sent = send((*varsMap)["client_sock"]->getDir(), message.c_str(), strlen(message.c_str()), 0);

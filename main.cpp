@@ -50,14 +50,14 @@ int main(int argc, char *argv[]) {
     } catch (const char *e) {
         cout << e << endl;
     }
-
+    //closes the socket
     close((*varsMap)["client_sock"]->getDir());
     memoryFree();
     delete simMap;
     delete varsMap;
     return 0;
 }
-
+//frees the memory from the heap
 void memoryFree() {
     for (auto const &value: pointers) {
         delete value;
@@ -74,7 +74,7 @@ void memoryFree() {
 }
 
 
-//initalzing the xmlTable
+//initalzing the xmlTable according to the xml file
 void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
     //1
     Var *a = new Var(0, -1, "/instrumentation/airspeed-indicator/indicated-speed-kt");
@@ -259,8 +259,13 @@ void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
 
 
 }
+/*
+ * lexer function to read from the provided txt file and split every line to 2 sections in the vector
+ * one fot the first word and the rest to the second section
+ * its because usually the first word holds the command
+  */
 
-//lexer function to read from the provided txt file
+
 vector<string> lexer(char *filename) {
     vector<string> vector1;
     ifstream file;
@@ -295,7 +300,7 @@ vector<string> lexer(char *filename) {
     return vector1;
 }
 
-
+//checks the lexered vector and executing the commandes which are written in it
 void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap,
             map<string, Var *> *simMap) {
     unsigned int index = 0;

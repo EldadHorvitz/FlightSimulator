@@ -39,6 +39,7 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
     string expsecond = "";
     string identifier = "";
     int counter = 0;
+    //separates the string to 2 expressions and identifier- how we need to compare between them
     for (char c: v[index + 1]) {
         counter++;
         if (c == '<' || c == '>' || c == '!' || c == '=') {
@@ -70,6 +71,7 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
     Expression *first = i1->interpret(expfirst, varsMap);
     Expression *second = i2->interpret(expsecond, varsMap);
     x = 2 + index;
+    //checks what the condition is
     if (identifier == "==") {
         while (first->calculate() == second->calculate()) {
             miniParser(x,num,v,varsMap,simMap);
@@ -116,7 +118,7 @@ int WhileCommand::execute(vector<string> v, int index, map<string, Var *> *varsM
 
     return jump;
 }
-
+//initalzing the commands map
 map<string, Command *> WhileCommand::initilize() {
     map<string, Command *> hash;
     Command *c = new DefineVarCommand();
@@ -135,7 +137,7 @@ map<string, Command *> WhileCommand::initilize() {
     hash.insert({"if", c});
     return hash;
 }
-
+//removes all the instances of a char from the start of the word
 string WhileCommand::RemoveChar(string str, char c) {
     string result;
     int flag = 0;
@@ -149,7 +151,7 @@ string WhileCommand::RemoveChar(string str, char c) {
     }
     return result;
 }
-
+//does the same thing like original parser to the commands in the if command
 void WhileCommand::miniParser(int x , int num,vector<string> v,map<string, Var *> *varsMap,map<string, Var *> *simMap){
     map<string, Command *> hashMap = initilize();
     while (x < num) {

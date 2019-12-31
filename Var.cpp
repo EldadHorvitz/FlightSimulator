@@ -3,7 +3,7 @@
 //
 
 #include "Var.h"
-
+//holds the parameters we need to know about the simulator
 Var::Var(double vall, int dirl, const string &pathl) : val(vall), dir(dirl), path(pathl) {}
 
 Var::~Var() {

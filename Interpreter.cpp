@@ -102,10 +102,11 @@ string Interpreter::updateOp(string exp, int index) {
             return "";
     }
 }
-
+//making an expression out of a string
 Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
     std::regex r("\\s+");
     exp = std::regex_replace(exp, r, "");
+    //checks the string to find the brackets and the number ,variables and the mathematical operations
     for (unsigned int i = 0; i < exp.length(); i++) {
         char c = exp[i];
         if (isdigit(c)) {

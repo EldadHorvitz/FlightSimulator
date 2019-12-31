@@ -11,6 +11,7 @@ PrintCommand::PrintCommand() {
 
 //excuting the print command
 int PrintCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,__attribute__((unused)) map<string, Var *> *simMap) {
+    //if the text in in "" it prints it as is if not it prints the value of the variable in the map
     int i = 0;
     char c = v[index + 1][i];
     string name = "";
