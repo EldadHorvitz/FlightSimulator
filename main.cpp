@@ -15,6 +15,7 @@
 #include "Interpreter.h"
 #include <map>
 
+
 using namespace std;
 
 //functions declerations
@@ -28,6 +29,7 @@ parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *
 void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap);
 
 map<string, Command *> initilize();
+string RemoveChar(string str, char c);
 
 static vector<Command *> commandsPointers;
 static vector<Var *> xmlPointers;
@@ -44,9 +46,10 @@ int main(int argc, char *argv[]) {
     xmlInit(varsMap, simMap);
     try {
         parser(v, commandsMap, varsMap, simMap);;
-    } catch (const char *e) {
-        cout << e << endl;
+    } catch (const char* e) {
+        cout<<e<<endl;
     }
+
     close((*varsMap)["client_sock"]->getDir());
     memoryFree();
     delete simMap;
@@ -266,20 +269,25 @@ vector<string> lexer(char *filename) {
     char c = file.get();
     string temp = "";
     int flag = 1;
+    int flag2 = 0;
     while (c != EOF) {
-        if ((c == ' ' || c == '(' || c == ')' || c == ',') && flag) {
+        if ((c == ' ' || c == '(' || c == ')' || c == ',') && flag&&flag2) {
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
             flag = 0;
         } else if (c != '\n') {
             temp += c;
+            if (c!=' '){
+                flag2=1;
+            }
         } else {
 
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
             flag = 1;
+            flag2 = 0;
         }
         c = file.get();
     }
@@ -287,11 +295,13 @@ vector<string> lexer(char *filename) {
     return vector1;
 }
 
-//parser function that will excute the commands given in the file
+
 void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap,
             map<string, Var *> *simMap) {
     int index = 0;
     while (index < lexered.size()) {
+        lexered[index] = RemoveChar(lexered[index], '\t');
+        lexered[index] = RemoveChar(lexered[index], ' ');
         if (hashMap.count(lexered[index])) {
             Command *c = hashMap[lexered[index]];
             if (c != NULL) {
@@ -342,4 +352,17 @@ map<string, Command *> initilize() {
     commandsPointers.push_back(c);
 
     return hash;
+}
+string RemoveChar(string str, char c) {
+    string result;
+    int flag = 0;
+    for (size_t i = 0; i < str.size(); i++) {
+        char currentChar = str[i];
+        if (currentChar != c || flag == 1){
+            result += currentChar;
+            flag = 1;
+        }
+
+    }
+    return result;
 }

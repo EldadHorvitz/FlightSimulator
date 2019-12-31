@@ -58,143 +58,35 @@ int IfCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
     Expression *first = i1->interpret(expfirst, varsMap);
 
     Expression *second = i2->interpret(expsecond, varsMap);
-    map<string, Command *> hashMap = initilize();
+    x = 2+index;
     if (identifier == "==") {
         if (first->calculate() == second->calculate()) {
-            x = 2+index;
-            while (x < num) {
-                v[x]=RemoveChar(v[x],'\t');
-                v[x]=RemoveChar(v[x],' ');
-                if (hashMap.count(v[x])) {
-                    Command *c = hashMap[v[x]];
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else if (varsMap->count(v[x])) {
-                    Command *c = new AssignmentCommand();
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else {
-                    ++index;
-                }
-            }
-
+            miniParser(x,num,v,varsMap,simMap);
         }
 
     } else if (identifier == "!=") {
         if (first->calculate() != second->calculate()) {
-            x = 2+index;
-            while (x < num) {
-                v[x]=RemoveChar(v[x],'\t');
-                v[x]=RemoveChar(v[x],' ');
-                if (hashMap.count(v[x])) {
-                    Command *c = hashMap[v[x]];
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else if (varsMap->count(v[x])) {
-                    Command *c = new AssignmentCommand();
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else {
-                    ++index;
-                }
-            }
-
+            miniParser(x,num,v,varsMap,simMap);
         }
 
     } else if (identifier == "<=") {
         if (first->calculate() <= second->calculate()) {
-            x = 2+index;
-            while (x < num) {
-                v[x]=RemoveChar(v[x],'\t');
-                v[x]=RemoveChar(v[x],' ');
-                if (hashMap.count(v[x])) {
-                    Command *c = hashMap[v[x]];
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else if (varsMap->count(v[x])) {
-                    Command *c = new AssignmentCommand();
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else {
-                    ++index;
-                }
-            }
-
+            miniParser(x,num,v,varsMap,simMap);
         }
 
     } else if (identifier == ">=") {
         if (first->calculate() >= second->calculate()) {
-            x = 2+index;
-            while (x < num) {
-                v[x]=RemoveChar(v[x],'\t');
-                v[x]=RemoveChar(v[x],' ');
-                if (hashMap.count(v[x])) {
-                    Command *c = hashMap[v[x]];
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else if (varsMap->count(v[x])) {
-                    Command *c = new AssignmentCommand();
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else {
-                    ++index;
-                }
-            }
-
+            miniParser(x,num,v,varsMap,simMap);
         }
 
     } else if (identifier == ">") {
         if (first->calculate() > second->calculate()) {
-            x = 2+index;
-            while (x < num) {
-                v[x]=RemoveChar(v[x],'\t');
-                v[x]=RemoveChar(v[x],' ');
-                if (hashMap.count(v[x])) {
-                    Command *c = hashMap[v[x]];
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else if (varsMap->count(v[x])) {
-                    Command *c = new AssignmentCommand();
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else {
-                    ++index;
-                }
-            }
-
+            miniParser(x,num,v,varsMap,simMap);
         }
 
     } else if (identifier == "<") {
         if (first->calculate() < second->calculate()) {
-            x = 2+index;
-            while (x < num) {
-                v[x]=RemoveChar(v[x],'\t');
-                v[x]=RemoveChar(v[x],' ');
-                if (hashMap.count(v[x])) {
-                    Command *c = hashMap[v[x]];
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else if (varsMap->count(v[x])) {
-                    Command *c = new AssignmentCommand();
-                    if (c != NULL) {
-                        x += c->execute(v, x, varsMap, simMap);
-                    }
-                } else {
-                    ++index;
-                }
-            }
-
+            miniParser(x,num,v,varsMap,simMap);
         }
 
     }
@@ -221,16 +113,37 @@ map<string, Command *> IfCommand::initilize() {
 
     return hash;
 }
-
-
-string IfCommand::RemoveChar(string str, char c)
-{
+string IfCommand::RemoveChar(string str, char c) {
     string result;
-    for (size_t i = 0; i < str.size(); i++)
-    {
+    int flag = 0;
+    for (size_t i = 0; i < str.size(); i++) {
         char currentChar = str[i];
-        if (currentChar != c)
+        if (currentChar != c || flag == 1){
             result += currentChar;
+            flag = 1;
+        }
+
     }
     return result;
+}
+
+void IfCommand::miniParser(int x , int num,vector<string> v,map<string, Var *> *varsMap,map<string, Var *> *simMap){
+    map<string, Command *> hashMap = initilize();
+    while (x < num) {
+        v[x] = RemoveChar(v[x], '\t');
+        v[x] = RemoveChar(v[x], ' ');
+        if (hashMap.count(v[x])) {
+            Command *c = hashMap[v[x]];
+            if (c != NULL) {
+                x += c->execute(v, x, varsMap, simMap);
+            }
+        } else if (varsMap->count(v[x])) {
+            Command *c = new AssignmentCommand();
+            if (c != NULL) {
+                x += c->execute(v, x, varsMap, simMap);
+            }
+        } else {
+            ++x;
+        }
+    }
 }
