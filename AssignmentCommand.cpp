@@ -17,7 +17,8 @@ int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *
     Interpreter *i1 = new Interpreter();
     Expression *ex = i1->interpret(var, varsMap);
     if (!varsMap->count(v[index])) {
-        varsMap->insert({v[index], new Var(-999, -1, "")});
+        globalVarAssignment = new Var(-999, -1, "");
+        varsMap->insert({v[index], globalVarAssignment});
     }
     Var *s = (*varsMap)[v[index]];
     s->setVal(ex->calculate());

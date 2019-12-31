@@ -25,6 +25,7 @@ static bool isConnect = false;
 static int client_socket_server;
 static std::mutex m1;
 static std::mutex m2;
+static thread *threadGlobal = nullptr;
 
 class OpenServerCommand : public Command {
 

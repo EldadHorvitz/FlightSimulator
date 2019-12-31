@@ -8,6 +8,7 @@
 #include "ConnectCommand.h"
 #include "Interpreter.h"
 
+
 ConnectCommand::ConnectCommand() {
 
 }
@@ -60,7 +61,7 @@ int ConnectCommand::clientStart(int port, const char *ip, map<string, Var *> *va
         std::cerr << "Could not connect to host Server" << std::endl;
         return -2;
     }
-    Var *tr = new Var(client_socket, client_socket, "");
+    tr = new Var(client_socket, client_socket, "");
     varsMap->insert({"client_sock", tr});
     return 0;
 }

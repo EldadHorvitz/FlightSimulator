@@ -64,9 +64,10 @@ void memoryFree() {
     for (auto const &value: xmlPointers) {
         delete value;
     }
-
-
+    delete tr;
     delete eGlobal;
+    delete globalVarAssignment;
+    delete threadGlobal;
 }
 
 

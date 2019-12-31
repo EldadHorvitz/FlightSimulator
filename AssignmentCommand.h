@@ -8,17 +8,19 @@
 
 #include "Command.h"
 #include "ConnectCommand.h"
-class AssignmentCommand : public Command{
+
+static Var *globalVarAssignment = nullptr;
+
+class AssignmentCommand : public Command {
 public:
     AssignmentCommand();
 
-    int execute(vector<string> v, int index,map<string, Var *> *varsMap,map<string, Var *> *simMap) override;
+    int execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) override;
 
     virtual ~AssignmentCommand();
 
 
 };
-
 
 
 #endif //EX3_ASSIGNMENTCOMMAND_H
