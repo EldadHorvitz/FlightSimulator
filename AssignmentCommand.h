@@ -9,7 +9,7 @@
 #include "Command.h"
 #include "ConnectCommand.h"
 
-static Var *globalVarAssignment = nullptr;
+__attribute__((unused)) static Var *globalVarAssignment = nullptr;
 
 class AssignmentCommand : public Command {
 public:

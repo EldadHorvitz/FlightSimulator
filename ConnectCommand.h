@@ -15,8 +15,8 @@
 #include <arpa/inet.h>
 #include <cstring>
 
-static int client_socket_client;
-static Var *tr = nullptr;
+__attribute__((unused)) static Var *tr = nullptr;
+__attribute__((unused)) static int client_socket_client;
 
 class ConnectCommand : public Command {
 public:

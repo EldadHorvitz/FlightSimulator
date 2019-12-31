@@ -79,7 +79,8 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
 }
 
 //reading from the client
-void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+void
+OpenServerCommand::readFromClient(map<string, Var *> *varsMap, __attribute__((unused)) map<string, Var *> *simMap) {
     m2.lock();
     string s = "";
     while (isConnect) {
@@ -100,7 +101,8 @@ void OpenServerCommand::readFromClient(map<string, Var *> *varsMap, map<string, 
 }
 
 //reading from the given buffer
-void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMap,
+                                       __attribute__((unused)) map<string, Var *> *simMap) {
     m1.lock();
     std::string delimiter = ",";
     size_t pos = 0;
@@ -153,7 +155,8 @@ void OpenServerCommand::readFromBuffer(string buffer, map<string, Var *> *varsMa
 }
 
 
-void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+void OpenServerCommand::readFromBuffer1(string buffer, map<string, Var *> *varsMap,
+                                        __attribute__((unused)) map<string, Var *> *simMap) {
     std::string delimiter = ",";
     size_t pos = 0;
     std::string token[36];

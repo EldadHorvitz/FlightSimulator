@@ -21,11 +21,12 @@
 #include <chrono>
 #include <mutex>
 
-static bool isConnect = false;
-static int client_socket_server;
-static std::mutex m1;
-static std::mutex m2;
-static thread *threadGlobal = nullptr;
+__attribute__((unused)) static bool isConnect = false;
+__attribute__((unused)) static int client_socket_server;
+__attribute__((unused)) static std::mutex m1;
+__attribute__((unused)) static std::mutex m2;
+__attribute__((unused)) static thread *threadGlobal = nullptr;
+
 
 class OpenServerCommand : public Command {
 

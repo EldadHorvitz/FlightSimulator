@@ -13,7 +13,7 @@ ConnectCommand::ConnectCommand() {
 
 }
 
-int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+int ConnectCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,__attribute__((unused)) map<string, Var *> *simMap) {
     double port = 0;
     string portString = "";
     int flag = 0;

@@ -4,15 +4,15 @@
 
 #include "Var.h"
 
-Var::Var(double val, int dir, const string &path) : val(val), dir(dir), path(path) {}
+Var::Var(double vall, int dirl, const string &pathl) : val(vall), dir(dirl), path(pathl) {}
 
 Var::~Var() {
 
 }
 
 
-void Var::setVal(double val) {
-    Var::val = val;
+void Var::setVal(double vall) {
+    Var::val = vall;
 }
 
 double Var::getVal() {
@@ -23,8 +23,8 @@ int Var::getDir() const {
     return dir;
 }
 
-void Var::setDir(int dir) {
-    Var::dir = dir;
+void Var::setDir(int dirl) {
+    Var::dir = dirl;
 }
 
 const string &Var::getPath() const {

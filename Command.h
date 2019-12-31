@@ -20,7 +20,7 @@ public:
     virtual ~Command() {}
 
 protected:
-    map<string, Command *> varsMap;
+    map<string, Command *> varsMapC;
 };
 
 

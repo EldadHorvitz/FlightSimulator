@@ -11,7 +11,7 @@
 AssignmentCommand::AssignmentCommand() {}
 
 //excuting the Assignment Command
-int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+int AssignmentCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,__attribute__((unused)) map<string, Var *> *simMap) {
     string var = v[index + 1];
     var = var.substr(1, var.length());
     Interpreter *i1 = new Interpreter();

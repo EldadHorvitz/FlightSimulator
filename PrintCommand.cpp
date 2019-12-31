@@ -10,11 +10,10 @@ PrintCommand::PrintCommand() {
 }
 
 //excuting the print command
-int PrintCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+int PrintCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,__attribute__((unused)) map<string, Var *> *simMap) {
     int i = 0;
     char c = v[index + 1][i];
     string name = "";
-    double val;
     while (c != ')') {
         while (c != '"' && c != ')') {
             name += c;

@@ -10,7 +10,8 @@
 SleepCommand::SleepCommand() {}
 
 //excuting the sleep command
-int SleepCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap, map<string, Var *> *simMap) {
+int SleepCommand::execute(vector<string> v, int index, map<string, Var *> *varsMap,
+                          __attribute__((unused)) map<string, Var *> *simMap) {
     Interpreter *i1 = new Interpreter();
     string sleepstring = v[index + 1];
     sleepstring = sleepstring.substr(0, sleepstring.length() - 1);

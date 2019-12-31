@@ -13,8 +13,7 @@
 #include "Var.h"
 #include <map>
 
-static vector<Expression *> pointers;
-static Expression **eGlobal = nullptr;
+__attribute__((unused)) static vector<Expression *> pointers;
 
 class Interpreter {
 private:
@@ -28,7 +27,7 @@ public:
 
     void setVariables(string);
 
-    void addVariable(string input);
+    void addVariable( string input);
 
     Expression *interpret(string, map<string, Var *> *varsMap);
 

@@ -13,7 +13,6 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
     int i = 0;
     char c = v[index + 1][i];
     string name = "";
-    double val;
     int dir = -999;
     string path = "";
     while (!isalpha(c)) {
@@ -36,7 +35,7 @@ int DefineVarCommand::execute(vector<string> v, int index, map<string, Var *> *v
         tempV.insert(tempV.begin() + 1, v[index + 1].substr(i, v[index + 1].length() - 1));
         Command *ca = new AssignmentCommand();
         if (ca != NULL) {
-            int res = ca->execute(tempV, 0, varsMap, simMap);
+            ca->execute(tempV, 0, varsMap, simMap);
         }
         delete ca;
         ca = nullptr;

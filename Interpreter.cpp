@@ -58,8 +58,8 @@ void Interpreter::setVariables(string input) {
     }
 }
 
-void Interpreter::addVariable(string str) {
-
+void Interpreter::addVariable(__attribute__((unused)) string str) {
+    return;
 }
 
 bool Interpreter::priority(string f, string s) {
@@ -179,7 +179,6 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
 
             Expression *e = new Value(number);
             experessionStack.push(e);
-            eGlobal = &e;
             pointers.push_back(e);
 
 

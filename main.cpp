@@ -29,6 +29,7 @@ parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *
 void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap);
 
 map<string, Command *> initilize();
+
 string RemoveChar(string str, char c);
 
 static vector<Command *> commandsPointers;
@@ -46,8 +47,8 @@ int main(int argc, char *argv[]) {
     xmlInit(varsMap, simMap);
     try {
         parser(v, commandsMap, varsMap, simMap);;
-    } catch (const char* e) {
-        cout<<e<<endl;
+    } catch (const char *e) {
+        cout << e << endl;
     }
 
     close((*varsMap)["client_sock"]->getDir());
@@ -68,7 +69,6 @@ void memoryFree() {
         delete value;
     }
     delete tr;
-    delete eGlobal;
     delete globalVarAssignment;
     delete threadGlobal;
 }
@@ -271,15 +271,15 @@ vector<string> lexer(char *filename) {
     int flag = 1;
     int flag2 = 0;
     while (c != EOF) {
-        if ((c == ' ' || c == '(' || c == ')' || c == ',') && flag&&flag2) {
+        if ((c == ' ' || c == '(' || c == ')' || c == ',') && flag && flag2) {
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
             flag = 0;
         } else if (c != '\n') {
             temp += c;
-            if (c!=' '){
-                flag2=1;
+            if (c != ' ') {
+                flag2 = 1;
             }
         } else {
 
@@ -298,7 +298,7 @@ vector<string> lexer(char *filename) {
 
 void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *> *varsMap,
             map<string, Var *> *simMap) {
-    int index = 0;
+    unsigned int index = 0;
     while (index < lexered.size()) {
         lexered[index] = RemoveChar(lexered[index], '\t');
         lexered[index] = RemoveChar(lexered[index], ' ');
@@ -353,12 +353,13 @@ map<string, Command *> initilize() {
 
     return hash;
 }
+
 string RemoveChar(string str, char c) {
     string result;
     int flag = 0;
     for (size_t i = 0; i < str.size(); i++) {
         char currentChar = str[i];
-        if (currentChar != c || flag == 1){
+        if (currentChar != c || flag == 1) {
             result += currentChar;
             flag = 1;
         }
