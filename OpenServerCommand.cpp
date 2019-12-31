@@ -23,6 +23,8 @@ int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *
     port = port.substr(0, port.length() - 1);
     Expression *ex = i1->interpret(port, varsMap);
     double portNum = ex->calculate();
+    delete i1;
+    i1 = nullptr;
     serverStart(portNum, varsMap, simMap);
     int result = 0;
     if (result == 0) {
@@ -30,8 +32,7 @@ int OpenServerCommand::execute(vector<string> v, int index, map<string, Var *> *
     } else {
         throw "error";
     }
-    delete i1;
-    i1 = nullptr;
+
 }
 
 //starrting the server

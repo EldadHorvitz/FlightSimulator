@@ -59,35 +59,7 @@ void Interpreter::setVariables(string input) {
 }
 
 void Interpreter::addVariable(string str) {
-    /*
-    double number;
-    int index = 0;
-    if (!this->isLetter(str[0])) {
-        throw "bad input";
-    } else {
-        for (unsigned int i = 0; i < str.length(); i++) {
-            if (str[i] == '=') {
-                index = i;
-                break;
-            }
-        }
-    }
-    if (index == 0) {
-        throw "bad input";
-    }
-    if (!this->isNum(str.substr(index + 1, str.length() - index - 1))) {
-        throw "illegal variable assignment!";
-    }
-    string valuestr = str.substr(index + 1, str.length() - index - 1);
-    stringstream convert(valuestr);
-    convert >> number;
-    string name = str.substr(0, index);
-    if (this->vars.count(name)) {
-        this->vars[name] = number;
-    } else {
-        this->vars.insert(std::pair<string, double>(name, number));
-    }
-*/
+
 }
 
 bool Interpreter::priority(string f, string s) {
@@ -161,11 +133,11 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
             this->operatorsStack.push(op);
         } else if (isLetter(c)) {
             int index = i;
-            while (!(isOperator(c)) && c != '('&& c != ')'&& c != ' ') {
+            while (!(isOperator(c)) && c != '(' && c != ')' && c != ' ') {
                 i++;
                 c = exp[i];
             }
-            string varName = exp.substr(index, i - index );
+            string varName = exp.substr(index, i - index);
             if (!(varsMap->count(varName))) {
                 throw "bad input1";
             } else {
@@ -204,12 +176,16 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
             double number;
             stringstream convert(temp);
             convert >> number;
-            experessionStack.push(new Value(number));
+            eGlobal = new Value(number);
+            experessionStack.push(eGlobal);
+
 
         } else if (varsMap->count(this->numbersQueue.front())) {
             string temp = this->numbersQueue.front();
             this->numbersQueue.pop();
-            experessionStack.push(new Value((*varsMap)[temp]->getVal()));
+            Expression *e = new Value((*varsMap)[temp]->getVal());
+            experessionStack.push(e);
+            pointers.push_back(e);
 
         } else if (isOperatorStr(this->numbersQueue.front())) {
             if (this->numbersQueue.front() == "*") {
@@ -224,7 +200,10 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
-                experessionStack.push(new Mul(second, first));
+                Expression *e = new Mul(second, first);
+                experessionStack.push(e);
+                pointers.push_back(e);
+
             } else if (this->numbersQueue.front() == "/") {
                 if (experessionStack.empty()) {
                     throw "bad input6";
@@ -237,7 +216,10 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
-                experessionStack.push(new Div(second, first));
+                Expression *e = new Div(second, first);
+                experessionStack.push(e);
+                pointers.push_back(e);
+
             } else if (this->numbersQueue.front() == "+") {
                 if (experessionStack.empty()) {
                     throw "bad input8";
@@ -250,7 +232,10 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
-                experessionStack.push(new Plus(second, first));
+                Expression *e = new Plus(second, first);
+                experessionStack.push(e);
+                pointers.push_back(e);
+
             } else if (this->numbersQueue.front() == "-") {
                 if (experessionStack.empty()) {
                     throw "bad input10";
@@ -263,7 +248,10 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
                 }
                 second = experessionStack.top();
                 experessionStack.pop();
-                experessionStack.push(new Minus(second, first));
+                Expression *e = new Minus(second, first);
+                experessionStack.push(e);
+                pointers.push_back(e);
+
             } else if (this->numbersQueue.front() == "~") {
                 if (experessionStack.empty()) {
                     throw "bad input12";
@@ -271,7 +259,10 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
                 this->numbersQueue.pop();
                 first = experessionStack.top();
                 experessionStack.pop();
-                experessionStack.push(new UMinus(first));
+                Expression *e = new UMinus(first);
+                experessionStack.push(e);
+                pointers.push_back(e);
+
             } else if (this->numbersQueue.front() == "#") {
                 if (experessionStack.empty()) {
                     throw "bad input13";
@@ -279,7 +270,10 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
                 this->numbersQueue.pop();
                 first = experessionStack.top();
                 experessionStack.pop();
-                experessionStack.push(new UPlus(first));
+                Expression *e = new UPlus(first);
+                experessionStack.push(e);
+                pointers.push_back(e);
+
             }
 
         } else {

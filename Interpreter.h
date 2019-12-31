@@ -13,6 +13,9 @@
 #include "Var.h"
 #include <map>
 
+static vector<Expression *> pointers;
+static Expression *eGlobal = nullptr;
+
 class Interpreter {
 private:
     stack<string> operatorsStack;
@@ -24,14 +27,22 @@ public:
     virtual ~Interpreter();
 
     void setVariables(string);
+
     void addVariable(string input);
-    Expression *interpret(string,map<string, Var *> *varsMap);
+
+    Expression *interpret(string, map<string, Var *> *varsMap);
+
     bool isOperator(char c);
+
     bool isOperatorStr(string s);
+
     bool isNum(string s);
+
     bool isLetter(char c);
+
     bool priority(string f, string s);
-    string updateOp(string exp,int i);
+
+    string updateOp(string exp, int i);
 };
 
 
