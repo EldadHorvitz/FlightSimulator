@@ -14,7 +14,7 @@
 #include <map>
 
 static vector<Expression *> pointers;
-static Expression *eGlobal = nullptr;
+static Expression **eGlobal = nullptr;
 
 class Interpreter {
 private:

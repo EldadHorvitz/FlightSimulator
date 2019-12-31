@@ -75,7 +75,6 @@ int OpenServerCommand::serverStart(double portNum, map<string, Var *> *varsMap, 
     isConnect = true;
     thread *t1 = new thread(readFromClient, varsMap, simMap);
     threadGlobal = t1;
-    t1 = threadGlobal;
     return 1;
 }
 

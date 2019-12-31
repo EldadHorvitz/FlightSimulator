@@ -176,8 +176,11 @@ Expression *Interpreter::interpret(string exp, map<string, Var *> *varsMap) {
             double number;
             stringstream convert(temp);
             convert >> number;
-            eGlobal = new Value(number);
-            experessionStack.push(eGlobal);
+
+            Expression *e = new Value(number);
+            experessionStack.push(e);
+            eGlobal = &e;
+            pointers.push_back(e);
 
 
         } else if (varsMap->count(this->numbersQueue.front())) {
