@@ -24,7 +24,7 @@ parser(vector<string> lexered, map<string, Command *> hashMap, map<string, Var *
 void xmlInit(map<string, Var *> *varsMap, map<string, Var *> *simMap);
 
 map<string, Command *> initilize();
-
+string RemoveChar(string str, char c);
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
@@ -203,20 +203,24 @@ vector<string> lexer(char *filename) {
     char c = file.get();
     string temp = "";
     int flag = 1;
+    int flag2 = 0;
     while (c != EOF) {
-        if ((c == ' ' || c == '(' || c == ')' || c == ',') && flag) {
+        if ((c == ' ' || c == '(' || c == ')' || c == ',') && flag&&flag2) {
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
             flag = 0;
         } else if (c != '\n') {
             temp += c;
+            if (c!=' '){
+                flag2=1;
+            }
         } else {
-
             vector1.insert(vector1.begin() + indexVector, temp);
             temp = "";
             indexVector++;
             flag = 1;
+            flag2 = 0;
         }
         c = file.get();
     }
@@ -229,6 +233,8 @@ void parser(vector<string> lexered, map<string, Command *> hashMap, map<string, 
             map<string, Var *> *simMap) {
     int index = 0;
     while (index < lexered.size()) {
+        lexered[index] = RemoveChar(lexered[index], '\t');
+        lexered[index] = RemoveChar(lexered[index], ' ');
         if (hashMap.count(lexered[index])) {
             Command *c = hashMap[lexered[index]];
             if (c != NULL) {
@@ -265,4 +271,16 @@ map<string, Command *> initilize() {
 
     return hash;
 }
+string RemoveChar(string str, char c) {
+    string result;
+    int flag = 0;
+    for (size_t i = 0; i < str.size(); i++) {
+        char currentChar = str[i];
+        if (currentChar != c || flag == 1){
+            result += currentChar;
+            flag = 1;
+        }
 
+    }
+    return result;
+}
