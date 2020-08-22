@@ -48,7 +48,7 @@ we save the client socket number in the map in order to use it out of class.
 
 we have while and if commands that check if a condition is true and then they execute whats written in them.
 
-sleep commands makes the thread o the main sleep.
+sleep commands makes the thread of the main sleep.
 
 print commands prints string or value of a variable from the table.
 
